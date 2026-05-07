@@ -13,7 +13,7 @@ const Loader = (() => {
     { at: 75, msg: 'INITIALIZING_RENDER_ENGINE',   log: '[GFX]   :: CANVAS_RENDERER_ONLINE' },
     { at: 88, msg: 'CALIBRATING_INTERFACE',        log: '[UI]    :: ALL_MODULES_SYNCHRONIZED' },
     { at: 96, msg: 'FINALIZING_SYSTEM_STATE',      log: '[SYS]   :: UPTIME_CLOCK_STARTED' },
-    { at:100, msg: 'SYSTEM_READY',                 log: '[READY] :: APEX_OS_ONLINE ✓' },
+    { at:100, msg: 'SYSTEM_READY',                 log: '[READY] :: ROYAL_OS_ONLINE ✓' },
   ];
 
   function init() {
