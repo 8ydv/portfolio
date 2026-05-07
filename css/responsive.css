@@ -1,0 +1,267 @@
+/* ═══════════════════════════════════════════════
+   ROYAL SYSTEMS — RESPONSIVE
+   responsive.css · Mobile, Tablet, Desktop
+═══════════════════════════════════════════════ */
+
+/* ── LARGE DESKTOP (1400px+) ───────────────── */
+@media (min-width: 1400px) {
+  :root {
+    --sidebar-w: 320px;
+    --header-h: 75px;
+  }
+
+  .stat-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .projects-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* ── MEDIUM DESKTOP (1024px – 1399px) ─────── */
+@media (max-width: 1399px) {
+  .dash-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ── TABLET LANDSCAPE (768px – 1023px) ─────── */
+@media (max-width: 1023px) {
+  :root {
+    --sidebar-w: 260px;
+    --header-h: 60px;
+  }
+
+  .stat-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .about-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .proj-detail__body {
+    grid-template-columns: 1fr;
+  }
+
+  .header__meta {
+    gap: 20px;
+  }
+
+  .header__stat:nth-child(2) {
+    display: none;
+  }
+}
+
+/* ── TABLET PORTRAIT & MOBILE (< 768px) ─────── */
+@media (max-width: 767px) {
+  :root {
+    --header-h: 56px;
+    --sp-xl: 20px;
+    --sp-2xl: 32px;
+  }
+
+  body { overflow: auto; }
+
+  /* App grid: stack sidebar below header, full width */
+  #app {
+    grid-template-columns: 1fr;
+    grid-template-rows: var(--header-h) auto 1fr;
+  }
+
+  /* Header mobile */
+  #header {
+    padding: 0 var(--sp-md);
+  }
+
+  .header__badge { display: none; }
+  .header__stat  { display: none; }
+
+  /* Sidebar becomes bottom nav */
+  #sidebar {
+    grid-column: 1;
+    grid-row: 2;
+    flex-direction: row;
+    align-items: center;
+    padding: 0;
+    border-right: none;
+    border-bottom: 1px solid var(--c-border);
+    overflow-x: auto;
+    scrollbar-width: none;
+    height: 52px;
+    min-height: 52px;
+  }
+
+  #sidebar::-webkit-scrollbar { display: none; }
+
+  #sidebar::before { display: none; }
+
+  .sidebar__section { display: none; }
+  .sidebar__bottom  { display: none; }
+
+  .nav__item {
+    padding: 0 var(--sp-lg);
+    height: 100%;
+    white-space: nowrap;
+    border-left: none;
+    border-bottom: 2px solid transparent;
+    flex-direction: column;
+    gap: 2px;
+    font-size: 0.6rem;
+    justify-content: center;
+  }
+
+  .nav__item::before {
+    display: none;
+  }
+
+  .nav__item.active {
+    color: var(--c-text);
+    background: transparent;
+    border-bottom-color: var(--c-accent);
+  }
+
+  .nav__num { display: none; }
+
+  /* Main content full width */
+  #main {
+    grid-column: 1;
+    grid-row: 3;
+    overflow: auto;
+  }
+
+  /* Panes */
+  .pane {
+    position: relative;
+    padding: var(--sp-lg) var(--sp-md);
+    overflow: visible;
+  }
+
+  .pane:not(.active) { display: none; }
+
+  /* Stats 2 cols */
+  .stat-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--sp-md);
+  }
+
+  /* Project cards full width */
+  .projects-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* About stacked */
+  .about-layout {
+    grid-template-columns: 1fr;
+    gap: var(--sp-lg);
+  }
+
+  /* Pane header */
+  .pane__title {
+    font-size: 1.3rem;
+  }
+
+  /* Detail overlay */
+  .proj-detail__body {
+    grid-template-columns: 1fr;
+    padding: var(--sp-md);
+  }
+
+  /* Hero */
+  .hero__btn {
+    padding: 14px 40px;
+    font-size: 0.65rem;
+  }
+
+  /* Dashboard grid */
+  .dash-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* Corner decos hidden on mobile */
+  .corner-deco { display: none; }
+
+  /* Sys clock hidden */
+  #sys-clock { display: none; }
+
+  /* Loader */
+  .loader__inner { width: 88vw; }
+
+  /* Cursor off on touch */
+  #cursor-dot,
+  #cursor-ring { display: none; }
+  body { cursor: auto; }
+  button, a { cursor: pointer; }
+}
+
+/* ── SMALL MOBILE (< 480px) ─────────────────── */
+@media (max-width: 479px) {
+  .hero__title {
+    font-size: clamp(2.5rem, 14vw, 4rem);
+    letter-spacing: 8px;
+  }
+
+  .hero__sub {
+    font-size: 0.55rem;
+    letter-spacing: 5px;
+  }
+
+  .stat-card__value {
+    font-size: 1.4rem;
+  }
+
+  .pane__title {
+    font-size: 1.1rem;
+    letter-spacing: 3px;
+  }
+
+  .nav__item {
+    padding: 0 var(--sp-md);
+    font-size: 0.55rem;
+  }
+
+  .proj-detail__title {
+    font-size: 1rem;
+  }
+
+  .proj-detail__header {
+    height: 180px;
+  }
+}
+
+/* ── REDUCED MOTION ────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ── PRINT ─────────────────────────────────── */
+@media print {
+  #bg-canvas,
+  .scanlines,
+  .noise,
+  .scan-sweep,
+  .corner-deco,
+  #cursor-dot,
+  #cursor-ring,
+  #sys-clock,
+  #hero,
+  #loader { display: none !important; }
+
+  #app {
+    position: static;
+    opacity: 1;
+    pointer-events: auto;
+    display: block;
+  }
+
+  body {
+    background: #fff;
+    color: #000;
+    overflow: auto;
+  }
+}

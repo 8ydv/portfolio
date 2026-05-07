@@ -1,0 +1,67 @@
+{
+  "projects": [
+    {
+      "id": "aw",
+      "uid": "0x8821",
+      "title": "ADVANCED WARFARE",
+      "subtitle": "Call of Duty Series",
+      "year": "2014",
+      "genre": "FPS / ACTION",
+      "platform": "PS4",
+      "status": "COMPLETED",
+      "description": "Future-warfare first-person shooter featuring advanced exoskeleton mechanics, vertical movement, and high-tech weaponry. One of the most innovative entries in the franchise.",
+      "tags": ["FPS", "Multiplayer", "Campaign", "Zombies"],
+      "image": "assets/images/aw.png",
+      "color": "#c8a96e",
+      "stats": { "rating": 9.1, "hours": 120, "achievements": 47 }
+    },
+    {
+      "id": "mwr",
+      "uid": "0x4412",
+      "title": "MODERN WARFARE R",
+      "subtitle": "Remastered Edition",
+      "year": "2016",
+      "genre": "FPS / TACTICAL",
+      "platform": "PS4",
+      "status": "COMPLETED",
+      "description": "A faithful remaster of the groundbreaking original with upgraded visuals, rebalanced audio, and refined gameplay. The definitive version of a classic.",
+      "tags": ["FPS", "Remaster", "Classic", "Multiplayer"],
+      "image": "assets/images/mwr.png",
+      "color": "#7ea8c8",
+      "stats": { "rating": 9.4, "hours": 95, "achievements": 39 }
+    },
+    {
+      "id": "ww2",
+      "uid": "0x1102",
+      "title": "WORLD WAR II",
+      "subtitle": "Call of Duty Series",
+      "year": "2017",
+      "genre": "FPS / HISTORICAL",
+      "platform": "PS4",
+      "status": "COMPLETED",
+      "description": "A return to the franchise's roots on the European theater of World War II. Features visceral infantry combat, a moving campaign, and a War mode built for teamwork.",
+      "tags": ["FPS", "Historical", "War", "Co-op"],
+      "image": "assets/images/ww2.png",
+      "color": "#a0896b",
+      "stats": { "rating": 8.8, "hours": 80, "achievements": 33 }
+    }
+  ],
+  "owner": {
+    "name": "MOHAMMED",
+    "title": "GAME SYSTEMS DEVELOPER",
+    "tagline": "Building immersive interactive experiences",
+    "bio": "Passionate about game development and interactive design. Specializing in front-end systems, UI/UX for games, and building polished digital experiences that leave an impression.",
+    "skills": ["HTML / CSS / JS", "Game UI Design", "System Architecture", "Interactive Media", "Visual Design"],
+    "contact": {
+      "email": "otiebym@gmail.com",
+      "support": "https://ko-fi.com/imedo",
+      "discord": "9id."
+    },
+    "stats": {
+      "projects": 3,
+      "hours": 295,
+      "achievements": 119,
+      "years": 2
+    }
+  }
+}

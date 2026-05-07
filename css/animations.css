@@ -1,0 +1,298 @@
+/* ═══════════════════════════════════════════════
+   ROYAL SYSTEMS — ANIMATIONS
+   animations.css · Keyframes & Transition Helpers
+═══════════════════════════════════════════════ */
+
+/* ── ENTRY ANIMATIONS ──────────────────────── */
+@keyframes slide-up {
+  from { opacity: 0; transform: translateY(30px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slide-down {
+  from { opacity: 0; transform: translateY(-30px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slide-left {
+  from { opacity: 0; transform: translateX(30px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes slide-right {
+  from { opacity: 0; transform: translateX(-30px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes scale-in {
+  from { opacity: 0; transform: scale(0.92); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+@keyframes reveal-x {
+  from { clip-path: inset(0 100% 0 0); }
+  to   { clip-path: inset(0 0% 0 0); }
+}
+
+/* ── STAGGER CLASSES ───────────────────────── */
+.stagger-1  { animation-delay: 0.05s !important; }
+.stagger-2  { animation-delay: 0.1s  !important; }
+.stagger-3  { animation-delay: 0.15s !important; }
+.stagger-4  { animation-delay: 0.2s  !important; }
+.stagger-5  { animation-delay: 0.25s !important; }
+.stagger-6  { animation-delay: 0.3s  !important; }
+.stagger-7  { animation-delay: 0.35s !important; }
+.stagger-8  { animation-delay: 0.4s  !important; }
+
+/* ── ANIMATE-IN UTILITY ────────────────────── */
+.anim-hidden {
+  opacity: 0;
+  transform: translateY(16px);
+}
+
+.anim-in {
+  animation: slide-up 0.5s var(--ease-out) forwards;
+}
+
+/* ── TEXT TYPEWRITER CURSOR ────────────────── */
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+
+.typer-cursor {
+  display: inline-block;
+  width: 2px;
+  height: 0.9em;
+  background: var(--c-accent);
+  margin-left: 3px;
+  vertical-align: text-bottom;
+  animation: blink 0.5s step-end infinite;
+}
+
+/* ── NUMBER COUNT-UP ───────────────────────── */
+.countup { display: inline-block; }
+
+/* ── LINE DRAW ─────────────────────────────── */
+.line-draw {
+  overflow: hidden;
+  position: relative;
+}
+ 
+.line-draw::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0;
+  width: 100%; height: 1px;
+  background: var(--c-accent);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.8s var(--ease-out);
+}
+ 
+.line-draw.drawn::after {
+  transform: scaleX(1);
+}
+
+/* ── FLICKER ───────────────────────────────── */
+@keyframes flicker {
+  0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% { opacity: 1; }
+  20%, 24%, 55% { opacity: 0.4; }
+}
+
+.flicker {
+  animation: flicker 6s infinite;
+}
+
+/* ── SHIMMER (LOADING STATE) ───────────────── */
+@keyframes shimmer {
+  0%   { background-position: -400px 0; }
+  100% { background-position:  400px 0; }
+}
+
+.shimmer {
+  background: linear-gradient(
+    90deg,
+    var(--c-border) 25%,
+    rgba(255,255,255,0.04) 50%,
+    var(--c-border) 75%
+  );
+  background-size: 800px 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+/* ── SCAN LINE SWEEP ───────────────────────── */
+@keyframes scan-sweep {
+  from { transform: translateY(-100%); }
+  to   { transform: translateY(200vh); }
+}
+
+.scan-sweep {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(to bottom, transparent, rgba(255,255,255,0.04), transparent);
+  pointer-events: none;
+  z-index: 9998;
+  animation: scan-sweep 5s linear infinite;
+}
+
+/* ── GLITCH TEXT ───────────────────────────── */
+@keyframes glitch-clip-1 {
+  0%   { clip-path: inset(40% 0 61% 0); transform: translate(-4px, 0); }
+  20%  { clip-path: inset(92% 0 1% 0);  transform: translate(4px, 0); }
+  40%  { clip-path: inset(43% 0 1% 0);  transform: translate(-4px, 0); }
+  60%  { clip-path: inset(25% 0 58% 0); transform: translate(0, 0); }
+  80%  { clip-path: inset(54% 0 7% 0);  transform: translate(4px, 0); }
+  100% { clip-path: inset(40% 0 61% 0); transform: translate(-4px, 0); }
+}
+
+@keyframes glitch-clip-2 {
+  0%   { clip-path: inset(24% 0 29% 0); transform: translate(4px, 0); }
+  20%  { clip-path: inset(54% 0 7% 0);  transform: translate(-4px, 0); }
+  40%  { clip-path: inset(5% 0 48% 0);  transform: translate(4px, 0); }
+  60%  { clip-path: inset(64% 0 13% 0); transform: translate(0, 0); }
+  80%  { clip-path: inset(28% 0 39% 0); transform: translate(-4px, 0); }
+  100% { clip-path: inset(24% 0 29% 0); transform: translate(4px, 0); }
+}
+
+.glitch-text {
+  position: relative;
+}
+
+.glitch-text::before,
+.glitch-text::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  pointer-events: none;
+}
+
+.glitch-text::before {
+  color: #f0c;
+  animation: glitch-clip-1 3s infinite linear alternate-reverse;
+  opacity: 0;
+}
+
+.glitch-text::after {
+  color: #0cf;
+  animation: glitch-clip-2 3s infinite linear alternate-reverse;
+  opacity: 0;
+}
+
+.glitch-text:hover::before,
+.glitch-text:hover::after { opacity: 0.6; }
+
+/* ── PULSE RING ────────────────────────────── */
+@keyframes pulse-ring {
+  0%   { transform: scale(0.8);  opacity: 0.6; }
+  70%  { transform: scale(1.6);  opacity: 0; }
+  100% { transform: scale(1.6);  opacity: 0; }
+}
+
+.pulse-ring {
+  position: relative;
+}
+
+.pulse-ring::before {
+  content: '';
+  position: absolute;
+  inset: -6px;
+  border-radius: 50%;
+  border: 1px solid var(--c-accent);
+  animation: pulse-ring 2s ease-out infinite;
+  pointer-events: none;
+}
+
+/* ── ROTATE ────────────────────────────────── */
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+/* ── STAT CARD ENTRANCE ────────────────────── */
+.stat-card {
+  opacity: 0;
+  animation: scale-in 0.5s var(--ease-out) forwards;
+}
+
+/* Stagger stat cards */
+.stat-card:nth-child(1) { animation-delay: 0.05s; }
+.stat-card:nth-child(2) { animation-delay: 0.1s; }
+.stat-card:nth-child(3) { animation-delay: 0.15s; }
+.stat-card:nth-child(4) { animation-delay: 0.2s; }
+
+/* ── PROJECT CARD ENTRANCE ─────────────────── */
+.proj-card {
+  opacity: 0;
+  animation: slide-up 0.55s var(--ease-out) forwards;
+}
+
+.proj-card:nth-child(1) { animation-delay: 0.0s; }
+.proj-card:nth-child(2) { animation-delay: 0.1s; }
+.proj-card:nth-child(3) { animation-delay: 0.2s; }
+.proj-card:nth-child(4) { animation-delay: 0.3s; }
+.proj-card:nth-child(5) { animation-delay: 0.4s; }
+.proj-card:nth-child(6) { animation-delay: 0.5s; }
+
+/* ── ABOUT CARD ENTRANCE ───────────────────── */
+.about-id-card {
+  opacity: 0;
+  animation: slide-right 0.65s var(--ease-out) 0.1s forwards;
+}
+
+.about-right {
+  opacity: 0;
+  animation: slide-left 0.65s var(--ease-out) 0.2s forwards;
+}
+
+/* ── PANE HEADER ENTRANCE ──────────────────── */
+.pane__header {
+  opacity: 0;
+  animation: slide-down 0.5s var(--ease-out) 0.05s forwards;
+}
+
+/* ── LOADER BAR GLOW ───────────────────────── */
+/* NOTE: glow-pulse is applied only via box-shadow on .loader__fill
+   in style.css — no animation override here to avoid conflicting with
+   the JS-driven width updates */
+@keyframes glow-pulse {
+  0%, 100% { box-shadow: 0 0 4px rgba(200,169,110,0.3); }
+  50%       { box-shadow: 0 0 12px rgba(200,169,110,0.7); }
+}
+
+/* ── HERO TITLE WORD REVEAL ────────────────── */
+@keyframes word-reveal {
+  from {
+    opacity: 0;
+    clip-path: inset(0 100% 0 0);
+    transform: translateX(-10px);
+  }
+  to {
+    opacity: 1;
+    clip-path: inset(0 0% 0 0);
+    transform: translateX(0);
+  }
+}
+
+/* ── PAGE TRANSITION ───────────────────────── */
+@keyframes page-wipe-in {
+  from { clip-path: inset(0 100% 0 0); }
+  to   { clip-path: inset(0 0% 0 0); }
+}
+
+/* ── NOISE GRAIN ───────────────────────────── */
+@keyframes noise-grain {
+  0%, 100% { transform: translate(0,0);      }
+  10%       { transform: translate(-5%,-5%);  }
+  20%       { transform: translate(-10%,5%);  }
+  30%       { transform: translate(5%,-10%);  }
+  40%       { transform: translate(-5%,15%);  }
+  50%       { transform: translate(-10%,5%);  }
+  60%       { transform: translate(15%,0);    }
+  70%       { transform: translate(0,10%);    }
+  80%       { transform: translate(-15%,0);   }
+  90%       { transform: translate(10%,5%);   }
+}

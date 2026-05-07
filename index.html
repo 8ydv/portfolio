@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Royal Systems — Portfolio of Mohammed, Game Systems Developer">
+  <meta name="theme-color" content="#010101">
+  <title>Royal Systems</title>
+  
+  
+  <link rel="icon" type="image/png" href="assets/images/logo.ico">
+  <link rel="apple-touch-icon" href="assets/images/logo.ico">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <link rel="stylesheet" href="css/responsive.css">
+
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Share+Tech+Mono&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+  <a href="#main" class="sr-only" style="position:fixed;top:4px;left:4px;z-index:999999;background:#fff;color:#000;padding:8px 16px;font-size:0.75rem;">
+    Skip to content
+  </a>
+
+  <canvas id="bg-canvas" aria-hidden="true"></canvas>
+
+  <div class="scanlines"   aria-hidden="true"></div>
+  <div class="noise"       aria-hidden="true"></div>
+  <div class="scan-sweep"  aria-hidden="true"></div>
+
+  <div class="corner-deco corner-deco--tl" aria-hidden="true"></div>
+  <div class="corner-deco corner-deco--tr" aria-hidden="true"></div>
+  <div class="corner-deco corner-deco--bl" aria-hidden="true"></div>
+  <div class="corner-deco corner-deco--br" aria-hidden="true"></div>
+
+  <div id="cursor-dot"  aria-hidden="true"></div>
+  <div id="cursor-ring" aria-hidden="true"></div>
+
+  <div id="sys-clock" aria-hidden="true"></div>
+
+<audio id="bgMusic" loop>
+  <source src="assets/audio/audio.mp3" type="audio/mpeg">
+</audio>
+
+<audio id="successSound">
+  <source src="assets/audio/success.mp3" type="audio/mpeg">
+</audio>
+
+  <section id="hero" role="banner" aria-label="Welcome screen">
+
+    <div class="hero__eyebrow" aria-hidden="true">[ SYSTEM INITIALIZED ]</div>
+
+    <h1 class="hero__title">
+      <span class="hero__title-line">ROYAL</span>
+    </h1>
+
+    <p class="hero__sub">GAME SYSTEMS DEVELOPER · PORTFOLIO</p>
+
+    <div class="hero__divider" aria-hidden="true"></div>
+
+    <button
+      id="hero-btn"
+      class="hero__btn"
+      aria-label="Initialize access to portfolio"
+    >
+      INITIALIZE ACCESS
+    </button>
+
+    <div class="hero__version" aria-hidden="true">APEX_OS v4.0.0</div>
+
+  </section>
+
+
+  <div
+    id="loader"
+    role="status"
+    aria-label="Loading system"
+    aria-live="polite"
+  >
+    <div class="loader__inner">
+
+      <div class="loader__header">
+        <span id="loader-msg" class="loader__msg">MOUNTING_FILESYSTEM</span>
+        <span id="loader-pct" class="loader__pct">0%</span>
+      </div>
+
+      <div class="loader__track" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+        <div id="loader-fill" class="loader__fill"></div>
+      </div>
+
+      <div id="loader-log" class="loader__log" aria-hidden="true"></div>
+
+    </div>
+  </div>
+
+  <div id="app" aria-hidden="true">
+
+    <header id="header" role="banner">
+
+      <div class="header__brand">
+        <div class="header__logo" aria-label="Royal Systems">ROYAL_OS</div>
+        <div class="header__badge" aria-hidden="true">APEX PROTOCOL V4</div>
+      </div>
+
+      <div class="header__meta" aria-label="System status">
+        <div class="header__stat">
+          <div class="header__stat-dot" aria-hidden="true"></div>
+          ONLINE
+        </div>
+        <div class="header__stat" aria-hidden="true">
+          KERNEL: OPTIMAL
+        </div>
+        <div class="header__stat" id="header-time" aria-hidden="true">
+          NET: 0.14ms
+        </div>
+      </div>
+
+      <button
+        class="header__exit"
+        onclick="exitSequence()"
+        aria-label="Terminate connection and return to home"
+      >
+        [ TERMINATE ]
+      </button>
+
+    </header>
+
+
+    <aside id="sidebar" aria-label="Navigation">
+
+      <div class="sidebar__section">
+        <div class="sidebar__label" aria-hidden="true">NAVIGATION</div>
+      </div>
+
+      <nav aria-label="Main navigation">
+        <div
+          class="nav__item"
+          tabindex="0"
+          role="tab"
+          aria-selected="false"
+          aria-controls="pane-dashboard"
+        >
+          <span class="nav__num" aria-hidden="true">01</span>
+          DASHBOARD
+        </div>
+
+        <div
+          class="nav__item"
+          tabindex="0"
+          role="tab"
+          aria-selected="false"
+          aria-controls="pane-projects"
+        >
+          <span class="nav__num" aria-hidden="true">02</span>
+          PROJECTS
+        </div>
+
+        <div
+          class="nav__item"
+          tabindex="0"
+          role="tab"
+          aria-selected="false"
+          aria-controls="pane-about"
+        >
+          <span class="nav__num" aria-hidden="true">03</span>
+          ABOUT
+        </div>
+      </nav>
+
+      <div class="sidebar__bottom">
+        <div class="sidebar__sys-info" aria-hidden="true">
+          <div>SESSION_ID: APX-7734</div>
+          <div>CLEARANCE: LEVEL_7</div>
+          <div>ENC: AES-256-GCM</div>
+        </div>
+      </div>
+
+    </aside>
+
+
+    <main id="main" aria-label="Main content">
+
+
+
+      <section
+        class="pane"
+        id="pane-dashboard"
+        role="tabpanel"
+        aria-label="Dashboard"
+      >
+
+        <div class="pane__header">
+          <div class="pane__title-group">
+            <div class="pane__eyebrow">SYSTEM_STATUS</div>
+            <h2 class="pane__title">DASHBOARD</h2>
+          </div>
+          <div class="pane__count" aria-hidden="true">APEX_OS // ACTIVE</div>
+        </div>
+
+        <div class="stat-grid" role="list" aria-label="Statistics">
+
+          <div class="stat-card" role="listitem">
+            <div class="stat-card__label">TOTAL PROJECTS</div>
+            <div
+              class="stat-card__value"
+              id="stat-projects"
+              data-countup="3"
+              data-suffix=""
+              data-decimals="0"
+            >—</div>
+            <div class="stat-card__sub">TITLES ARCHIVED</div>
+          </div>
+
+          <div class="stat-card" role="listitem">
+            <div class="stat-card__label">HOURS PLAYED</div>
+            <div
+              class="stat-card__value"
+              id="stat-hours"
+              data-countup="295"
+              data-suffix="h"
+              data-decimals="0"
+            >—</div>
+            <div class="stat-card__sub">ACROSS ALL TITLES</div>
+          </div>
+
+          <div class="stat-card" role="listitem">
+            <div class="stat-card__label">ACHIEVEMENTS</div>
+            <div
+              class="stat-card__value"
+              id="stat-achievements"
+              data-countup="119"
+              data-suffix=""
+              data-decimals="0"
+            >—</div>
+            <div class="stat-card__sub">TOTAL UNLOCKED</div>
+          </div>
+
+          <div class="stat-card" role="listitem">
+            <div class="stat-card__label">EXPERIENCE</div>
+            <div
+              class="stat-card__value"
+              id="stat-years"
+              data-countup="2"
+              data-suffix="Y"
+              data-decimals="0"
+            >—</div>
+            <div class="stat-card__sub">ACTIVE YEARS</div>
+          </div>
+
+        </div>
+
+        <div class="dash-grid">
+
+          <div class="dash-card">
+            <div class="dash-card__title">PROFICIENCY_MATRIX</div>
+
+            <div class="skill-item">
+              <div class="skill-item__header">
+                <span class="skill-item__name">HTML / CSS / JS</span>
+                <span class="skill-item__pct">92%</span>
+              </div>
+              <div class="skill-item__track">
+                <div class="skill-item__fill" data-width="92%"></div>
+              </div>
+            </div>
+
+            <div class="skill-item">
+              <div class="skill-item__header">
+                <span class="skill-item__name">UI / UX DESIGN</span>
+                <span class="skill-item__pct">85%</span>
+              </div>
+              <div class="skill-item__track">
+                <div class="skill-item__fill" data-width="85%"></div>
+              </div>
+            </div>
+
+            <div class="skill-item">
+              <div class="skill-item__header">
+                <span class="skill-item__name">GAME SYSTEMS</span>
+                <span class="skill-item__pct">78%</span>
+              </div>
+              <div class="skill-item__track">
+                <div class="skill-item__fill" data-width="78%"></div>
+              </div>
+            </div>
+
+            <div class="skill-item">
+              <div class="skill-item__header">
+                <span class="skill-item__name">INTERACTIVE MEDIA</span>
+                <span class="skill-item__pct">80%</span>
+              </div>
+              <div class="skill-item__track">
+                <div class="skill-item__fill" data-width="80%"></div>
+              </div>
+            </div>
+
+            <div class="skill-item">
+              <div class="skill-item__header">
+                <span class="skill-item__name">VISUAL DESIGN</span>
+                <span class="skill-item__pct">88%</span>
+              </div>
+              <div class="skill-item__track">
+                <div class="skill-item__fill" data-width="88%"></div>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="dash-card">
+            <div class="dash-card__title">RECENT_ACTIVITY_LOG</div>
+
+            <div class="activity-item">
+              <div class="activity-item__dot"></div>
+              <div class="activity-item__text">AW_MULTIPLAYER_SESSION</div>
+              <div class="activity-item__time">2H AGO</div>
+            </div>
+            <div class="activity-item">
+              <div class="activity-item__dot"></div>
+              <div class="activity-item__text">MWR_CAMPAIGN_COMPLETED</div>
+              <div class="activity-item__time">1D AGO</div>
+            </div>
+            <div class="activity-item">
+              <div class="activity-item__dot"></div>
+              <div class="activity-item__text">WW2_ACHIEVEMENT_UNLOCKED</div>
+              <div class="activity-item__time">3D AGO</div>
+            </div>
+            <div class="activity-item">
+              <div class="activity-item__dot"></div>
+              <div class="activity-item__text">PORTFOLIO_UPDATED</div>
+              <div class="activity-item__time">1W AGO</div>
+            </div>
+            <div class="activity-item">
+              <div class="activity-item__dot"></div>
+              <div class="activity-item__text">NEW_PROJECT_ARCHIVED</div>
+              <div class="activity-item__time">2W AGO</div>
+            </div>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <section
+        class="pane"
+        id="pane-projects"
+        role="tabpanel"
+        aria-label="Projects"
+      >
+
+        <div class="pane__header">
+          <div class="pane__title-group">
+            <div class="pane__eyebrow">ACTIVE_REGISTRY</div>
+            <h2 class="pane__title">PROJECTS</h2>
+          </div>
+          <div class="pane__count" id="projects-count" aria-live="polite"></div>
+        </div>
+
+        <div class="projects-grid" id="projects-grid" role="list" aria-label="Game projects">
+        </div>
+
+      </section>
+
+
+
+      <section
+        class="pane"
+        id="pane-about"
+        role="tabpanel"
+        aria-label="About"
+      >
+
+        <div class="pane__header">
+          <div class="pane__title-group">
+            <div class="pane__eyebrow">OPERATOR_PROFILE</div>
+            <h2 class="pane__title">ABOUT</h2>
+          </div>
+        </div>
+
+        <div class="about-layout">
+
+          <div class="about-id-card">
+            <div class="about__avatar" aria-hidden="true">MR</div>
+            <div class="about__name" data-owner-name>MOHAMMED</div>
+            <div class="about__title" data-owner-title>GAME SYSTEMS DEVELOPER</div>
+            <p class="about__bio" id="owner-bio">
+              Passionate about game development and interactive design.
+              Specializing in front-end systems and building polished digital experiences.
+            </p>
+          </div>
+
+          <div class="about-right">
+
+            <div class="about-section">
+              <div class="about-section__title">SKILL_MODULES</div>
+              <div class="skills-list" id="skills-list">
+              </div>
+            </div>
+
+            <div class="about-section">
+              <div class="about-section__title">CONTACT_CHANNELS</div>
+              <div class="contact-list">
+
+                <div class="contact-item">
+                  <span class="contact-item__icon">EMAIL</span>
+                  <span id="contact-email">otiebym@gmail.com</span>
+                </div>
+
+                <div class="contact-item">
+                  <span class="contact-item__icon">SUPPORT</span>
+                  <span id="contact-support">https://ko-fi.com/imedo</span>
+                </div>
+
+                <div class="contact-item">
+                  <span class="contact-item__icon">DISCORD</span>
+                  <span id="contact-discord">9id.</span>
+                </div>
+
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+    </main>
+  </div>
+
+  <div
+    id="proj-detail"
+    class="proj-detail"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Project details"
+    aria-hidden="true"
+  >
+    <div class="proj-detail__box">
+
+      <div class="proj-detail__header">
+        <img
+          id="detail-cover"
+          class="proj-detail__cover"
+          src=""
+          alt="Project cover"
+        >
+        <div
+          id="detail-cover-placeholder"
+          class="proj-detail__cover-placeholder"
+          style="display:none;"
+        ></div>
+
+        <div class="proj-detail__header-info">
+          <div class="proj-detail__uid" id="detail-uid"></div>
+          <h2 class="proj-detail__title" id="detail-title"></h2>
+          <div style="font-family:var(--f-mono);font-size:0.5rem;letter-spacing:4px;color:#666;margin-top:6px;" id="detail-subtitle"></div>
+        </div>
+
+        <button
+          class="proj-detail__close"
+          onclick="closeDetail()"
+          aria-label="Close project details"
+        >
+          [ CLOSE ]
+        </button>
+      </div>
+
+      <div class="proj-detail__body">
+
+        <div>
+          <div class="proj-detail__info-row">
+            <span class="proj-detail__info-label">YEAR</span>
+            <span class="proj-detail__info-val" id="detail-year"></span>
+          </div>
+          <div class="proj-detail__info-row">
+            <span class="proj-detail__info-label">GENRE</span>
+            <span class="proj-detail__info-val" id="detail-genre"></span>
+          </div>
+          <div class="proj-detail__info-row">
+            <span class="proj-detail__info-label">PLATFORM</span>
+            <span class="proj-detail__info-val" id="detail-platform"></span>
+          </div>
+          <div class="proj-detail__info-row">
+            <span class="proj-detail__info-label">STATUS</span>
+            <span class="proj-detail__info-val" id="detail-status"></span>
+          </div>
+          <div class="proj-detail__info-row">
+            <span class="proj-detail__info-label">RATING</span>
+            <span class="proj-detail__info-val" id="detail-rating"></span>
+          </div>
+          <div class="proj-detail__info-row">
+            <span class="proj-detail__info-label">HOURS</span>
+            <span class="proj-detail__info-val" id="detail-hours"></span>
+          </div>
+          <div class="proj-detail__info-row">
+            <span class="proj-detail__info-label">ACHIEVEMENTS</span>
+            <span class="proj-detail__info-val" id="detail-achievements"></span>
+          </div>
+        </div>
+
+        <div>
+          <div style="font-family:var(--f-mono);font-size:0.48rem;letter-spacing:4px;color:var(--c-text-muted);margin-bottom:12px;">DESCRIPTION</div>
+          <p class="proj-detail__desc" id="detail-desc"></p>
+
+          <div style="font-family:var(--f-mono);font-size:0.48rem;letter-spacing:4px;color:var(--c-text-muted);margin-top:24px;margin-bottom:12px;">TAGS</div>
+          <div class="proj-card__meta" id="detail-tags" style="margin-top:0;"></div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+
+
+  <script src="js/particles.js"></script>
+  <script src="js/loader.js"></script>
+  <script src="js/tabs.js"></script>
+  <script src="js/system.js"></script>
+  <script src="js/app.js"></script>
+
+</body>
+</html>
