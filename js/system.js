@@ -71,7 +71,7 @@ const System = (() => {
         bio:'Passionate about game development and interactive design. Specializing in front-end systems, UI/UX for games, and building polished digital experiences that leave an impression.',
         skills:['HTML / CSS / JS','Game UI Design','System Architecture','Interactive Media','Visual Design'],
         contact:{ email:'otiebym@gmail.com', support:'https://ko-fi.com/imedo', discord:'9id.' },
-        stats:{ projects:3, hours:295, achievements:119, years:2 }
+        stats:{ projects:3, hours:651, achievements:119, years:2 }
       }
     };
   }
