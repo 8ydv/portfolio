@@ -23,7 +23,6 @@ const ViewCounter = (() => {
       const data = await res.json();
       return data.count ?? data.value ?? 0;
     } catch {
-      // fallback: localStorage فقط لو فشل الـ API
       const local = parseInt(localStorage.getItem('vc_fallback') || '0') + 1;
       localStorage.setItem('vc_fallback', local);
       return local;
@@ -76,7 +75,6 @@ const ViewCounter = (() => {
     `;
     document.body.appendChild(widget);
 
-    // Entrance animation
     requestAnimationFrame(() => {
       setTimeout(() => widget.classList.add('vc-show'), 0);
     });
