@@ -185,9 +185,9 @@ const SoundSystem = (() => {
 
   audio = bgEl || new Audio();
   audio.volume = masterVolume;
-  audio.loop = false;
+  audio.loop = true;
 
-  audio.onended = () => nextTrack();
+  audio.onended = null;
   audio.ontimeupdate = updateProgress;
   audio.onloadedmetadata = updateProgress;
 
