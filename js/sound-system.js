@@ -191,7 +191,6 @@ const SoundSystem = (() => {
   audio.ontimeupdate = updateProgress;
   audio.onloadedmetadata = updateProgress;
 
-  // ✅ مزامنة حالة Play/Pause مع الـ audio الموجود
   audio.onplay = () => {
     isPlaying = true;
     updatePlayBtn();
