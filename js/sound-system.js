@@ -658,7 +658,15 @@ document.addEventListener('visibilitychange', () => {
     .ss-track-item__dur { opacity: 0.4; flex-shrink: 0; }
     .ss-no-tracks {
       padding: 14px; font-size: 0.5rem; letter-spacing: 1px;
-      color: rgba(255,255,255,0.2); line-height: 1.8;
+     color: rgba(255,255,255,0.2); line-height: 1.8;
+    }
+
+    @media (max-width: 768px) {
+      .ss-player {
+        width: 160px;
+        right: 10px;
+        bottom: 10px;
+      }
     }
 
     `;
