@@ -1,9 +1,3 @@
-/* ═══════════════════════════════════════════════
-   ROYAL SYSTEMS — ANIMATIONS
-   animations.css · Keyframes & Transition Helpers
-═══════════════════════════════════════════════ */
-
-/* ── ENTRY ANIMATIONS ──────────────────────── */
 @keyframes slide-up {
   from { opacity: 0; transform: translateY(30px); }
   to   { opacity: 1; transform: translateY(0); }
@@ -34,7 +28,7 @@
   to   { clip-path: inset(0 0% 0 0); }
 }
 
-/* ── STAGGER CLASSES ───────────────────────── */
+
 .stagger-1  { animation-delay: 0.05s !important; }
 .stagger-2  { animation-delay: 0.1s  !important; }
 .stagger-3  { animation-delay: 0.15s !important; }
@@ -44,7 +38,7 @@
 .stagger-7  { animation-delay: 0.35s !important; }
 .stagger-8  { animation-delay: 0.4s  !important; }
 
-/* ── ANIMATE-IN UTILITY ────────────────────── */
+
 .anim-hidden {
   opacity: 0;
   transform: translateY(16px);
@@ -54,7 +48,6 @@
   animation: slide-up 0.5s var(--ease-out) forwards;
 }
 
-/* ── TEXT TYPEWRITER CURSOR ────────────────── */
 @keyframes blink {
   0%, 100% { opacity: 1; }
   50%       { opacity: 0; }
@@ -70,10 +63,8 @@
   animation: blink 0.5s step-end infinite;
 }
 
-/* ── NUMBER COUNT-UP ───────────────────────── */
 .countup { display: inline-block; }
 
-/* ── LINE DRAW ─────────────────────────────── */
 .line-draw {
   overflow: hidden;
   position: relative;
@@ -94,7 +85,6 @@
   transform: scaleX(1);
 }
 
-/* ── FLICKER ───────────────────────────────── */
 @keyframes flicker {
   0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% { opacity: 1; }
   20%, 24%, 55% { opacity: 0.4; }
@@ -104,7 +94,6 @@
   animation: flicker 6s infinite;
 }
 
-/* ── SHIMMER (LOADING STATE) ───────────────── */
 @keyframes shimmer {
   0%   { background-position: -400px 0; }
   100% { background-position:  400px 0; }
@@ -121,7 +110,6 @@
   animation: shimmer 1.5s infinite;
 }
 
-/* ── SCAN LINE SWEEP ───────────────────────── */
 @keyframes scan-sweep {
   from { transform: translateY(-100%); }
   to   { transform: translateY(200vh); }
@@ -138,7 +126,6 @@
   animation: scan-sweep 5s linear infinite;
 }
 
-/* ── GLITCH TEXT ───────────────────────────── */
 @keyframes glitch-clip-1 {
   0%   { clip-path: inset(40% 0 61% 0); transform: translate(-4px, 0); }
   20%  { clip-path: inset(92% 0 1% 0);  transform: translate(4px, 0); }
@@ -185,7 +172,6 @@
 .glitch-text:hover::before,
 .glitch-text:hover::after { opacity: 0.6; }
 
-/* ── PULSE RING ────────────────────────────── */
 @keyframes pulse-ring {
   0%   { transform: scale(0.8);  opacity: 0.6; }
   70%  { transform: scale(1.6);  opacity: 0; }
@@ -206,25 +192,21 @@
   pointer-events: none;
 }
 
-/* ── ROTATE ────────────────────────────────── */
 @keyframes spin {
   from { transform: rotate(0deg); }
   to   { transform: rotate(360deg); }
 }
 
-/* ── STAT CARD ENTRANCE ────────────────────── */
 .stat-card {
   opacity: 0;
   animation: scale-in 0.5s var(--ease-out) forwards;
 }
 
-/* Stagger stat cards */
 .stat-card:nth-child(1) { animation-delay: 0.05s; }
 .stat-card:nth-child(2) { animation-delay: 0.1s; }
 .stat-card:nth-child(3) { animation-delay: 0.15s; }
 .stat-card:nth-child(4) { animation-delay: 0.2s; }
 
-/* ── PROJECT CARD ENTRANCE ─────────────────── */
 .proj-card {
   opacity: 0;
   animation: slide-up 0.55s var(--ease-out) forwards;
@@ -237,7 +219,6 @@
 .proj-card:nth-child(5) { animation-delay: 0.4s; }
 .proj-card:nth-child(6) { animation-delay: 0.5s; }
 
-/* ── ABOUT CARD ENTRANCE ───────────────────── */
 .about-id-card {
   opacity: 0;
   animation: slide-right 0.65s var(--ease-out) 0.1s forwards;
@@ -248,22 +229,17 @@
   animation: slide-left 0.65s var(--ease-out) 0.2s forwards;
 }
 
-/* ── PANE HEADER ENTRANCE ──────────────────── */
 .pane__header {
   opacity: 0;
   animation: slide-down 0.5s var(--ease-out) 0.05s forwards;
 }
 
-/* ── LOADER BAR GLOW ───────────────────────── */
-/* NOTE: glow-pulse is applied only via box-shadow on .loader__fill
-   in style.css — no animation override here to avoid conflicting with
-   the JS-driven width updates */
+
 @keyframes glow-pulse {
   0%, 100% { box-shadow: 0 0 4px rgba(200,169,110,0.3); }
   50%       { box-shadow: 0 0 12px rgba(200,169,110,0.7); }
 }
 
-/* ── HERO TITLE WORD REVEAL ────────────────── */
 @keyframes word-reveal {
   from {
     opacity: 0;
@@ -277,13 +253,11 @@
   }
 }
 
-/* ── PAGE TRANSITION ───────────────────────── */
 @keyframes page-wipe-in {
   from { clip-path: inset(0 100% 0 0); }
   to   { clip-path: inset(0 0% 0 0); }
 }
 
-/* ── NOISE GRAIN ───────────────────────────── */
 @keyframes noise-grain {
   0%, 100% { transform: translate(0,0);      }
   10%       { transform: translate(-5%,-5%);  }
