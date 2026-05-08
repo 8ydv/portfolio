@@ -31,6 +31,7 @@
       await System.init();
       Tabs.init(onTabChange);
       System.show();
+      EasterEggs.init();
     });
   }
 
