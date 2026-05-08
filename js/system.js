@@ -212,7 +212,15 @@ const System = (() => {
     if (!projectsData) return;
     const o = projectsData.owner;
 
-    document.querySelectorAll('[data-owner-name]').forEach(el => el.textContent  = o.name);
+  
+document.querySelectorAll('[data-owner-name]').forEach(el => {
+  el.innerHTML = `${o.name} <span class="verified-badge" title="Verified">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+      <path d="M12 2L14.09 8.26L21 9.27L16 14.14L17.18 21.02L12 17.77L6.82 21.02L8 14.14L3 9.27L9.91 8.26L12 2Z" fill="#c8a96e" stroke="#c8a96e" stroke-width="1.5" stroke-linejoin="round"/>
+      <path d="M9 12L11 14L15 10" stroke="#000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </span>`;
+});
     document.querySelectorAll('[data-owner-title]').forEach(el => el.textContent = o.title);
 
     const bioEl = document.getElementById('owner-bio');
