@@ -171,16 +171,11 @@ const SoundSystem = (() => {
       if (playerEl) renderTrackInfo();
     }
 
-    function init(trackList = DEFAULT_TRACKS) {
+   
+function init(trackList = DEFAULT_TRACKS) {
   tracks = trackList;
 
-  const bgEl = document.getElementById('bgMusic');
-  if (tracks.length === 0 && bgEl) {
-    const src = bgEl.querySelector('source')?.src || bgEl.src;
-    tracks = [{ title: 'GHOST_SIGNAL_X', artist: 'ROYAL_SYS', src }];
-  }
-
-  audio = bgEl || new Audio();
+  audio = new Audio();
 audio.volume = masterVolume;
 audio.loop = true;
 audio.onended = () => {
