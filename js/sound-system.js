@@ -168,37 +168,32 @@ const SoundSystem = (() => {
     ];
 
     function setTracks(trackList) {
-      tracks = trackList;
-      if (playerEl) renderTrackInfo();
-    }
+    tracks = trackList;
+    renderTrackInfo();
+    renderTrackList();
+}
 
    
 function init(trackList = DEFAULT_TRACKS) {
   tracks = trackList;
 
   audio = new Audio();
-audio.volume = masterVolume;
-audio.loop = true;
-audio.onended = () => {
-  audio.currentTime = 0;
-  audio.play().catch(() => {});
-};
-audio.ontimeupdate = updateProgress;
-audio.onloadedmetadata = updateProgress;
-audio.onplay = () => {
-  isPlaying = true;
-  updatePlayBtn();
-};
-audio.onpause = () => {
-  isPlaying = false;
-  updatePlayBtn();
-};
-
-document.addEventListener('visibilitychange', () => {
-  if (!document.hidden && audio && audio.paused && isPlaying) {
+  audio.volume = masterVolume;
+  audio.loop = true;
+  audio.onended = () => {
+    audio.currentTime = 0;
     audio.play().catch(() => {});
-  }
-});
+  };
+  audio.ontimeupdate = updateProgress;
+  audio.onloadedmetadata = updateProgress;
+  audio.onplay = () => { isPlaying = true; updatePlayBtn(); };
+  audio.onpause = () => { isPlaying = false; updatePlayBtn(); };
+
+  document.addEventListener('visibilitychange', () => {
+    if (!document.hidden && audio && audio.paused && isPlaying) {
+      audio.play().catch(() => {});
+    }
+  });
 
   try {
     const ctx = getCtx();
@@ -691,8 +686,13 @@ function init(tracks = []) {
 
 function preInit() {
   injectStyles();
+  Player.buildPlayerUI();
+  requestAnimationFrame(() => {
+    const el = document.getElementById('ss-player');
+    if (el) el.classList.add('show');
+  });
 }
 
-  return { init, preInit, UI, Player, setMasterVolume, toggleMute, getAnalyser: () => analyser };
+return { init, preInit, UI, Player, setMasterVolume, toggleMute, getAnalyser: () => analyser };
 
 })();
