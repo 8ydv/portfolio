@@ -42,7 +42,8 @@ async function startBoot() {
     EasterEggs.init();
 
     SoundSystem.init([
-      { title: 'GHOST_SIGNAL_X', artist: 'ROYAL_SYS', src: 'assets/audio/audio.mp3', duration: '' }
+      { title: 'GHOST_SIGNAL_X', artist: 'ROYAL_SYS', src: 'assets/audio/audio.mp3', duration: '' },
+      { title: 'Fire_SIGNAL_X', artist: 'ROYAL_SYS', src: 'assets/audio/audio2.mp3', duration: '' }
     ]);
     ViewCounter.init();
   });
