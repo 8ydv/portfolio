@@ -686,6 +686,6 @@ function preInit() {
   injectStyles();
 }
 
-  return { init, UI, Player, setMasterVolume, toggleMute, getAnalyser: () => analyser };
+  return { init, preInit, UI, Player, setMasterVolume, toggleMute, getAnalyser: () => analyser };
 
 })();
