@@ -45,10 +45,11 @@ const SoundSystem = (() => {
   }
 
   function toggleMute() {
-    muted = !muted;
-    if (masterGain) masterGain.gain.setTargetAtTime(muted ? 0 : masterVolume, getCtx().currentTime, 0.05);
-    updateMuteUI();
-  }
+  muted = !muted;
+  if (masterGain) masterGain.gain.setTargetAtTime(muted ? 0 : masterVolume, getCtx().currentTime, 0.05);
+  if (audio) audio.volume = muted ? 0 : masterVolume;
+  updateMuteUI();
+}
 
   /* ══════════════════════════════════════════
      UI SOUND LIBRARY (Web Audio API — no files)
@@ -268,7 +269,13 @@ document.addEventListener('visibilitychange', () => {
       document.getElementById('ss-prev').addEventListener('click', prevTrack);
       document.getElementById('ss-next').addEventListener('click', nextTrack);
       document.getElementById('ss-loop').addEventListener('click', toggleLoop);
-      document.getElementById('ss-mute-btn').addEventListener('click', () => { toggleMute(); UI.click(); });
+      document.getElementById('ss-mute-btn').addEventListener('click', () => {
+      muted = !muted;
+      audio.volume = muted ? 0 : masterVolume;
+      if (masterGain) masterGain.gain.setTargetAtTime(muted ? 0 : masterVolume, getCtx().currentTime, 0.05);
+      updateMuteUI();
+      UI.click();
+      });
       document.getElementById('ss-progress-bar').addEventListener('click', seek);
 
       const volSlider = document.getElementById('ss-vol');
@@ -655,6 +662,11 @@ document.addEventListener('visibilitychange', () => {
       padding: 14px; font-size: 0.5rem; letter-spacing: 1px;
      color: rgba(255,255,255,0.2); line-height: 1.8;
     }
+     /* ── HIDE CURSOR INSIDE PLAYER ── */
+.ss-player,
+.ss-player * {
+  cursor: none !important;
+}
 
     @media (max-width: 768px) {
       .ss-player {
