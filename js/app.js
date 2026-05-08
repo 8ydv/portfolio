@@ -12,9 +12,27 @@
 
 function initHeroBtnEvent() {
   const btn = document.getElementById('hero-btn');
+
   if (btn) {
     btn.addEventListener('click', () => {
+
+      SoundSystem.init([
+        {
+          title: 'Fire_SIGNAL_X',
+          artist: 'ROYAL_SYS',
+          src: 'assets/audio/audio.mp3',
+          duration: ''
+        },
+        {
+          title: 'GHOST_SIGNAL_X',
+          artist: 'ROYAL_SYS',
+          src: 'assets/audio/audio1.mp3',
+          duration: ''
+        }
+      ]);
+
       attachUISoundsAfterInteraction();
+
       startBoot();
     });
   }
@@ -32,11 +50,6 @@ async function startBoot() {
     Tabs.init(onTabChange);
     System.show();
     EasterEggs.init();
-
-    SoundSystem.init([
-      { title: 'Fire_SIGNAL_X', artist: 'ROYAL_SYS', src: 'assets/audio/audio.mp3', duration: '' },
-      { title: 'GHOST_SIGNAL_X', artist: 'ROYAL_SYS', src: 'assets/audio/audio1.mp3', duration: '' }
-    ]);
     ViewCounter.init();
   });
 }
