@@ -183,7 +183,7 @@ const ViewCounter = (() => {
     @media (max-width: 768px) {
   .vc-widget {
     bottom: 20px;
-    left: 16px;
+    left: 5px;
     transform: translateY(12px);
   }
   .vc-widget.vc-show {
