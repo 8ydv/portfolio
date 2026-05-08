@@ -1,17 +1,10 @@
-/* ═══════════════════════════════════════════════
-   ROYAL SYSTEMS — SYSTEM MODULE
-   system.js · Core App Logic & UI Controllers
-═══════════════════════════════════════════════ */
-
 const System = (() => {
 
   let appEl, projectsData;
 
-  /* ── INIT ────────────────────────────────── */
   async function init() {
     appEl = document.getElementById('app');
     await loadData();
-    //initCursor();
     initClock();
     buildProjects();
     buildAbout();
@@ -21,7 +14,6 @@ const System = (() => {
     initHoverables();
   }
 
-  /* ── LOAD DATA ───────────────────────────── */
   async function loadData() {
     try {
       const res = await fetch('data/projects.json');
@@ -71,17 +63,15 @@ const System = (() => {
         bio:'Passionate about game development and interactive design. Specializing in front-end systems, UI/UX for games, and building polished digital experiences that leave an impression.',
         skills:['HTML / CSS / JS','Game UI Design','System Architecture','Interactive Media','Visual Design'],
         contact:{ email:'otiebym@gmail.com', support:'https://ko-fi.com/imedo', discord:'9id.' },
-        stats:{ projects:3, hours:651, achievements:119, years:2 }
+        stats:{ projects:3, hours:295, achievements:119, years:2 }
       }
     };
   }
 
-  /* ── CURSOR ──────────────────────────────── */
   function initCursor() {
     const dot  = document.getElementById('cursor-dot');
     const ring = document.getElementById('cursor-ring');
 
-    // Hide on touch devices
     if (!dot || !ring || window.matchMedia('(hover: none)').matches) {
       if (dot)  dot.style.display  = 'none';
       if (ring) ring.style.display = 'none';
@@ -89,7 +79,6 @@ const System = (() => {
       return;
     }
 
-    // Start offscreen (far enough that interpolation never reaches edge)
     let tx = window.innerWidth / 2, ty = window.innerHeight / 2;
     let rx = tx, ry = ty;
     let visible = false;
@@ -104,7 +93,6 @@ const System = (() => {
       }
     });
 
-    // Hide when mouse leaves window
     document.addEventListener('mouseleave', () => {
       dot.style.opacity  = '0';
       ring.style.opacity = '0';
@@ -120,7 +108,6 @@ const System = (() => {
     document.addEventListener('mousedown', () => document.body.classList.add('cursor-click'));
     document.addEventListener('mouseup',   () => document.body.classList.remove('cursor-click'));
 
-    // Initially hidden until first mousemove
     dot.style.opacity  = '0';
     ring.style.opacity = '0';
 
@@ -140,7 +127,6 @@ const System = (() => {
     tick();
   }
 
-  /* ── HOVER STATES FOR CURSOR ─────────────── */
   function initHoverables() {
     const SEL = 'button, .nav__item, .proj-card, .skill-tag, .contact-item, .header__exit, [role="button"]';
 
@@ -157,7 +143,6 @@ const System = (() => {
     new MutationObserver(attach).observe(document.body, { childList: true, subtree: true });
   }
 
-  /* ── CLOCK ───────────────────────────────── */
   function initClock() {
     const el = document.getElementById('sys-clock');
     if (!el) return;
@@ -175,7 +160,6 @@ const System = (() => {
     setInterval(tick, 1000);
   }
 
-  /* ── BUILD PROJECTS PANE ─────────────────── */
   function buildProjects() {
     const container = document.getElementById('projects-grid');
     if (!container || !projectsData) return;
@@ -224,7 +208,6 @@ const System = (() => {
     if (countEl) countEl.textContent = projectsData.projects.length + ' ENTRIES';
   }
 
-  /* ── BUILD ABOUT ─────────────────────────── */
   function buildAbout() {
     if (!projectsData) return;
     const o = projectsData.owner;
@@ -253,7 +236,6 @@ const System = (() => {
     });
   }
 
-  /* ── BUILD DASHBOARD ─────────────────────── */
   function buildDashboard() {
     if (!projectsData) return;
     const s = projectsData.owner.stats;
@@ -275,7 +257,6 @@ const System = (() => {
     });
   }
 
-  /* ── PROJECT DETAIL OVERLAY ──────────────── */
   function initProjectDetail() {
     const overlay = document.getElementById('proj-detail');
     if (!overlay) return;
@@ -291,7 +272,6 @@ const System = (() => {
 
     const overlay = document.getElementById('proj-detail');
 
-    // Fill fields
     const fields = {
       'detail-uid':          `UID: ${proj.uid}`,
       'detail-title':        proj.title,
@@ -310,7 +290,6 @@ const System = (() => {
       if (el) el.textContent = val;
     });
 
-    // Cover image
     const cover   = document.getElementById('detail-cover');
     const coverPh = document.getElementById('detail-cover-placeholder');
     if (cover) {
@@ -327,7 +306,6 @@ const System = (() => {
       if (coverPh) coverPh.style.display = 'none';
     }
 
-    // Tags
     const tagsEl = document.getElementById('detail-tags');
     if (tagsEl) {
       tagsEl.innerHTML = proj.tags.map(t => `<span class="proj-card__tag">${t}</span>`).join('');
@@ -346,7 +324,6 @@ const System = (() => {
     document.body.style.overflow = '';
   }
 
-  /* ── KEYBOARD SHORTCUTS ──────────────────── */
   function initKeyboard() {
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') closeProjectDetail();
@@ -359,14 +336,12 @@ const System = (() => {
     });
   }
 
-  /* ── SHOW APP ────────────────────────────── */
   function show() {
     appEl.classList.add('active');
     appEl.removeAttribute('aria-hidden');
     setTimeout(() => Tabs.activate(0), 100);
   }
 
-  /* ── HIDE APP (EXIT) ─────────────────────── */
   function hide(onComplete) {
     appEl.classList.add('glitch');
 
