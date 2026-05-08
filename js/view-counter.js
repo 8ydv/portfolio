@@ -9,8 +9,6 @@ const ViewCounter = (() => {
      CONFIG
   ══════════════════════════════════════════ */
   const CONFIG = {
-    // counterapi.dev — مجاني ولا يحتاج تسجيل
-    // غيّر "royalmenu" لأي namespace تبيه (فريد لموقعك)
     namespace: 'royalmenu',
     key:       'royalmenu_xyz_visits',
     apiBase:   'https://api.counterapi.dev/v1',
