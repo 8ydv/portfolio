@@ -7,7 +7,8 @@
 
   SoundSystem.init([
     { title: 'Fire_SIGNAL_X', artist: 'ROYAL_SYS', src: 'assets/audio/audio.mp3', duration: '01:59' },
-    { title: 'GHOST_SIGNAL_X', artist: 'ROYAL_SYS', src: 'assets/audio/audio1.mp3', duration: '03:18' }
+    { title: 'GHOST_SIGNAL_X', artist: 'ROYAL_SYS', src: 'assets/audio/audio1.mp3', duration: '03:18' },
+    { title: '108292_SIGNAL_X', artist: 'ROYAL_SYS', src: 'assets/audio/audio1.mp3', duration: '03:18' }
   ]);
 
   const player = document.getElementById('ss-player');
