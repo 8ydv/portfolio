@@ -180,6 +180,19 @@ const ViewCounter = (() => {
       color: rgba(255,255,255,0.12);
     }
 
+    @media (max-width: 768px) {
+      .vc-widget {
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%) translateY(12px);
+      }
+      .vc-widget.vc-show {
+        transform: translateX(-50%) translateY(0);
+      }
+    }
+
+    `;
+
     `;
     document.head.appendChild(style);
   }
