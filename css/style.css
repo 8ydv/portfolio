@@ -335,6 +335,11 @@ body.cursor-click #cursor-dot  { transform: translate(-50%, -50%) scale(0.5); }
 
 .loader__inner {
   width: min(440px, 88vw);
+  
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .loader__header {
@@ -349,8 +354,13 @@ body.cursor-click #cursor-dot  { transform: translate(-50%, -50%) scale(0.5); }
   font-size: 0.78rem;
   letter-spacing: 3px;
   color: #444;
-  min-height: 1em;
-  transition: color var(--t-fast);
+
+  height: 20px;
+  display: block;
+  margin-bottom: 20px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .loader__msg.pulse { color: var(--c-accent); }
@@ -400,7 +410,17 @@ body.cursor-click #cursor-dot  { transform: translate(-50%, -50%) scale(0.5); }
   font-size: 0.68rem;
   line-height: 1.9;
   color: var(--c-text-muted);
-  min-height: 80px;
+  
+  height: 120px;
+  overflow-y: auto;
+  pointer-events: none;
+
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.loader__log::-webkit-scrollbar {
+  display: none;
 }
 
 .loader__log-line { display: block; }
