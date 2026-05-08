@@ -10,30 +10,42 @@
     initHeroBtnEvent();
   });
 
-  function initHeroBtnEvent() {
-    const btn = document.getElementById('hero-btn');
-    const bgMusic = document.getElementById('bgMusic');
+function initHeroBtnEvent() {
+  const btn = document.getElementById('hero-btn');
 
-    if (btn) {
-      btn.addEventListener('click', () => {
-        if (bgMusic) {
-          bgMusic.volume = 0.7;
-          bgMusic.play().catch(e => console.warn("Audio autoplay blocked by browser context."));
-        }
-        
-        startBoot();
-      });
-    }
-  }
+  if (btn) {
+    btn.addEventListener('click', () => {
+      const bgMusic = document.getElementById('bgMusic');
+      if (bgMusic) {
+        bgMusic.volume = 0.5;
+        bgMusic.play().catch(e => console.warn('Audio blocked:', e));
+      }
 
-  async function startBoot() {
-    Loader.start(async () => {
-      await System.init();
-      Tabs.init(onTabChange);
-      System.show();
-      EasterEggs.init();
+      attachUISoundsAfterInteraction();
+      
+      startBoot();
     });
   }
+}
+
+function attachUISoundsAfterInteraction() {
+  if (window.SoundSystem) {
+    SoundSystem.UI.boot();
+  }
+}
+
+async function startBoot() {
+  Loader.start(async () => {
+    await System.init();
+    Tabs.init(onTabChange);
+    System.show();
+    EasterEggs.init();
+
+    SoundSystem.init([
+      { title: 'GHOST_SIGNAL_X', artist: 'ROYAL_SYS', src: 'assets/audio/audio.mp3', duration: '' }
+    ]);
+  });
+}
 
   function onTabChange(index, prev) {
     switch (index) {
@@ -53,18 +65,12 @@
     System.closeProjectDetail();
   };
 
-  document.addEventListener('DOMContentLoaded', () => {
-    const startBtn = document.getElementById('hero-btn');
-    const audio = document.getElementById('bgMusic');
-
-    if (startBtn && audio) {
-        startBtn.addEventListener('click', () => {
-            audio.volume = 0.4;
-            audio.play().catch(error => {
-                console.log("الارتباط بالصوت فشل: ", error);
-            });
-        });
-    }
+window.addEventListener('DOMContentLoaded', () => {
+  Particles.init();
+  Loader.init();
+  SoundSystem.init(); // ← هنا، قبل كل شي
+  setTimeout(() => System.initCursor(), 50);
+  initHeroBtnEvent();
 });
 
 })();
