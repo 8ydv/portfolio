@@ -345,8 +345,8 @@ body.cursor-click #cursor-dot  { transform: translate(-50%, -50%) scale(0.5); }
 .loader__header {
   display: flex;
   justify-content: space-between;
-  align-items: baseline;
-  margin-bottom: var(--sp-sm);
+  align-items: flex-end;
+  margin-bottom: 5px;
 }
 
 .loader__msg {
@@ -355,12 +355,15 @@ body.cursor-click #cursor-dot  { transform: translate(-50%, -50%) scale(0.5); }
   letter-spacing: 3px;
   color: #444;
 
-  height: 20px;
-  display: block;
-  margin-bottom: 20px;
+  height: auto; 
+  display: inline-block; 
+  margin-bottom: 0;   
+  vertical-align: bottom;
+  
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+  max-width: 70%;       
 }
 
 .loader__msg.pulse { color: var(--c-accent); }
