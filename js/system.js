@@ -292,18 +292,17 @@ const System = (() => {
 
     const cover   = document.getElementById('detail-cover');
     const coverPh = document.getElementById('detail-cover-placeholder');
-    if (cover) {
-      cover.src    = proj.image;
-      cover.onerror = () => {
-        cover.style.display = 'none';
-        if (coverPh) { coverPh.style.display = 'flex'; coverPh.textContent = proj.id.toUpperCase(); }
-      };
-      cover.onload = () => {
-        cover.style.display = 'block';
-        if (coverPh) coverPh.style.display = 'none';
-      };
-      cover.style.display = 'block';
-      if (coverPh) coverPh.style.display = 'none';
+    if (cover)   cover.style.display   = 'none';
+    if (coverPh) coverPh.style.display = 'none';
+
+    const showcase = document.getElementById('detail-showcase');
+    if (showcase) {
+      if (proj.showcase) {
+        showcase.src           = proj.showcase;
+        showcase.style.display = 'block';
+      } else {
+        showcase.style.display = 'none';
+      }
     }
 
     const tagsEl = document.getElementById('detail-tags');
