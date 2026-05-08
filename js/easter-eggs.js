@@ -18,10 +18,44 @@ const EasterEggs = (() => {
   let hackActive = false;
   let royalThemeActive = false;
 
+  /* ── LOCALSTORAGE HELPERS ────────────────── */
+  const STORAGE_KEY = 'ee_unlocked';
+
+  function getUnlocked() {
+    try {
+      return new Set(JSON.parse(localStorage.getItem(STORAGE_KEY)) || []);
+    } catch {
+      return new Set();
+    }
+  }
+
+  function saveUnlocked(set) {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify([...set]));
+    } catch {}
+  }
+
+  function isUnlocked(title) {
+    return getUnlocked().has(title);
+  }
+
+  function markUnlocked(title) {
+    const unlocked = getUnlocked();
+    unlocked.add(title);
+    saveUnlocked(unlocked);
+  }
+
   /* ── ACHIEVEMENT TOAST ───────────────────── */
   function showAchievement(icon, title, desc) {
+    // تحقق من الذاكرة أولاً ثم من localStorage
     if (achievements.has(title)) return;
+    if (isUnlocked(title)) {
+      achievements.add(title); // sync in-memory
+      return;
+    }
+
     achievements.add(title);
+    markUnlocked(title);
 
     const toast = document.createElement('div');
     toast.className = 'ee-achievement';
@@ -138,6 +172,9 @@ const EasterEggs = (() => {
   }
 
   function activateCheatMode() {
+    // ← تحقق: إذا سبق تفعيلها، لا تشتغل مجدداً
+    if (isUnlocked('KONAMI MASTER')) return;
+
     playKonamiSound();
     screenFlash('#c8a96e', 400);
 
@@ -189,6 +226,9 @@ const EasterEggs = (() => {
   }
 
   function activateHackMode() {
+    // ← تحقق: إذا سبق تفعيلها، لا تشتغل مجدداً
+    if (isUnlocked('GHOST IN THE MACHINE')) return;
+
     playHackSound();
     screenFlash('#00ff41', 200);
 
@@ -243,6 +283,7 @@ const EasterEggs = (() => {
 
   /* ══════════════════════════════════════════
      3. TYPE "ROYAL" — THEME SWITCH
+     (هذي مقصودة تكرر، لكن الـ achievement مرة وحدة)
   ══════════════════════════════════════════ */
   const THEMES = [
     { name: 'GOLD',    accent: '#c8a96e', glow: 'rgba(200,169,110,0.4)' },
@@ -278,6 +319,7 @@ const EasterEggs = (() => {
       setTimeout(() => badge.remove(), 500);
     }, 2500);
 
+    // الـ achievement تظهر مرة وحدة فقط (showAchievement تتحكم بذلك تلقائياً)
     showAchievement('🎨', 'CHROMATIC SHIFT', `Theme changed to ${theme.name} — type ROYAL again for next.`);
 
     setTimeout(() => { royalThemeActive = false; }, 1000);
@@ -290,6 +332,9 @@ const EasterEggs = (() => {
     document.addEventListener('click', (e) => {
       // Skip if clicking on interactive elements
       if (e.target.closest('button, a, .nav__item, .proj-card, input, #ee-secret-msg')) return;
+
+      // إذا سبق إلغاء قفلها، ما نكمل العدّ أصلاً
+      if (isUnlocked('ENTER THE MATRIX')) return;
 
       clickCount++;
       playBeep(300 + clickCount * 50, 30, 'square', 0.03);
@@ -327,6 +372,9 @@ const EasterEggs = (() => {
   }
 
   function activateMatrixRain() {
+    // ← تحقق: إذا سبق تفعيلها، لا تشتغل مجدداً
+    if (isUnlocked('ENTER THE MATRIX')) return;
+
     matrixActive = true;
     playBeep(110, 400, 'sawtooth', 0.07);
     screenFlash('#00ff41', 200);
@@ -394,7 +442,6 @@ const EasterEggs = (() => {
     nameEls.forEach(el => {
       if (el._tripleClickBound) return;
       el._tripleClickBound = true;
-      el.style.cursor = 'pointer';
       el.addEventListener('click', handleTripleClick);
     });
 
@@ -403,7 +450,6 @@ const EasterEggs = (() => {
       document.querySelectorAll('[data-owner-name]').forEach(el => {
         if (el._tripleClickBound) return;
         el._tripleClickBound = true;
-        el.style.cursor = 'pointer';
         el.addEventListener('click', handleTripleClick);
       });
     });
@@ -411,6 +457,9 @@ const EasterEggs = (() => {
   }
 
   function handleTripleClick() {
+    // إذا سبق إلغاء قفلها، ما نكمل العدّ أصلاً
+    if (isUnlocked('SHADOW PROTOCOL')) return;
+
     tripleClickCount++;
     playClickSound();
     clearTimeout(tripleClickTimer);
@@ -423,6 +472,9 @@ const EasterEggs = (() => {
   }
 
   function showSecretCard() {
+    // ← تحقق: إذا سبق تفعيلها، لا تشتغل مجدداً
+    if (isUnlocked('SHADOW PROTOCOL')) return;
+
     const existing = document.getElementById('ee-secret-card');
     if (existing) { existing.remove(); return; }
 
@@ -756,6 +808,9 @@ const EasterEggs = (() => {
      PUBLIC INIT
   ══════════════════════════════════════════ */
   function init() {
+    // مزامنة الـ achievements المحفوظة مع الذاكرة عند البداية
+    getUnlocked().forEach(title => achievements.add(title));
+
     injectStyles();
     initKonami();
     initHackWord();
@@ -763,6 +818,16 @@ const EasterEggs = (() => {
     initTripleClick();
   }
 
-  return { init };
+  /* ══════════════════════════════════════════
+     PUBLIC RESET (اختياري — لإعادة تعيين كل شيء)
+     استخدام: EasterEggs.reset()
+  ══════════════════════════════════════════ */
+  function reset() {
+    localStorage.removeItem(STORAGE_KEY);
+    achievements.clear();
+    console.log('[EasterEggs] All achievements reset.');
+  }
+
+  return { init, reset };
 
 })();
