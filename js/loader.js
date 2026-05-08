@@ -13,7 +13,7 @@ const Loader = (() => {
     { at: 75, msg: 'INITIALIZING_RENDER_ENGINE',   log: '[GFX]   :: CANVAS_RENDERER_ONLINE' },
     { at: 88, msg: 'CALIBRATING_INTERFACE',        log: '[UI]    :: ALL_MODULES_SYNCHRONIZED' },
     { at: 96, msg: 'FINALIZING_SYSTEM_STATE',      log: '[SYS]   :: UPTIME_CLOCK_STARTED' },
-    { at:100, msg: 'SYSTEM_READY',                 log: '[READY] :: ROYAL_OS_ONLINE ✓' },
+    { at:100, msg: 'SYSTEM_READY',                 log: '[READY] :: APEX_OS_ONLINE ✓' },
   ];
 
   function init() {
@@ -56,18 +56,14 @@ function runProgress(onComplete) {
 
     const timer = setInterval(() => {
       progress = Math.min(progress + 0.5 + Math.random() * 0.2, 100);
-      const successSound = document.getElementById('successSound');
 
       elFill.style.width = progress.toFixed(2) + '%';
       elPct.textContent  = Math.floor(progress) + '%';
 
       if (progress >= 70 && !hasPlayed70) {
-            if (successSound) {
-                successSound.currentTime = 0;
-                successSound.play();
-            }
-            hasPlayed70 = true;
-        }
+        if (window.SoundSystem) SoundSystem.UI.success();
+        hasPlayed70 = true;
+      }
 
       const now = Date.now();
       
@@ -80,17 +76,13 @@ function runProgress(onComplete) {
 
       if (currentTargetIdx > lastMsgIdx && !isUpdatingMsg) {
         if (now - lastMsgTime > MSG_DELAY || lastMsgIdx === -1) {
-          
           isUpdatingMsg = true;
           lastMsgIdx = currentTargetIdx;
           lastMsgTime = now;
-          
           elMsg.textContent = BOOT_LOG[lastMsgIdx].msg;
-          
           elMsg.classList.remove('pulse');
           void elMsg.offsetWidth; 
           elMsg.classList.add('pulse');
-          
           setTimeout(() => {
             elMsg.classList.remove('pulse');
             isUpdatingMsg = false;
