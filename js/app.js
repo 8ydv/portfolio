@@ -44,6 +44,7 @@ async function startBoot() {
     SoundSystem.init([
       { title: 'GHOST_SIGNAL_X', artist: 'ROYAL_SYS', src: 'assets/audio/audio.mp3', duration: '' }
     ]);
+    ViewCounter.init();
   });
 }
 
