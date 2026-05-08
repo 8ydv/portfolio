@@ -12,17 +12,9 @@
 
 function initHeroBtnEvent() {
   const btn = document.getElementById('hero-btn');
-
   if (btn) {
     btn.addEventListener('click', () => {
-      const bgMusic = document.getElementById('bgMusic');
-      if (bgMusic) {
-        bgMusic.volume = 0.5;
-        bgMusic.play().catch(e => console.warn('Audio blocked:', e));
-      }
-
       attachUISoundsAfterInteraction();
-      
       startBoot();
     });
   }
