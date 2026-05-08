@@ -164,9 +164,6 @@ const SoundSystem = (() => {
 
     // Default tracks — can be overridden
     const DEFAULT_TRACKS = [
-      // Add your mp3 paths here, e.g.:
-      // { title: 'AMBIENT_01', artist: 'ROYAL_SYS', src: 'assets/audio/track1.mp3' },
-      // For demo, we use a generated tone track
     ];
 
     function setTracks(trackList) {
