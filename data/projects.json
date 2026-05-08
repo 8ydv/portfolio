@@ -28,7 +28,7 @@
       "description": "A complete UI overhaul for Modern Warfare Remastered. Redesigned the menu flow, player cards, and match lobby with a tactical military aesthetic — sharp typography, minimal noise, maximum impact.",
       "tags": ["UI Design", "Game Mod", "Menu System", "Redesign"],
       "image": "assets/images/mwr.png",
-      "showcase": "assets/images/mwr-showcase.png",
+      "showcase": "assets/images/mwr-banner.png",
       "color": "#7ea8c8",
       "stats": { "rating": 9.4, "hours": 95, "achievements": 39 }
     },
@@ -44,7 +44,7 @@
       "description": "Crafted a historically-inspired UI theme for COD WW2. Vintage typography, aged textures, and period-accurate design language — built to match the game's tone while keeping the interface clean and functional.",
       "tags": ["UI Design", "Game Mod", "Theme", "Historical"],
       "image": "assets/images/ww2.png",
-      "showcase": "assets/images/mwr-showcase.png",
+      "showcase": "assets/images/ww2-banner.png",
       "color": "#a0896b",
       "stats": { "rating": 8.8, "hours": 80, "achievements": 33 }
     }
