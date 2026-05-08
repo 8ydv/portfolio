@@ -80,7 +80,7 @@ const ViewCounter = (() => {
 
     // Entrance animation
     requestAnimationFrame(() => {
-      setTimeout(() => widget.classList.add('vc-show'), 800);
+      setTimeout(() => widget.classList.add('vc-show'), 0);
     });
 
     return widget;
@@ -96,8 +96,8 @@ const ViewCounter = (() => {
     /* ── WIDGET SHELL ── */
     .vc-widget {
       position: fixed;
-      bottom: 28px;
-      left: 28px;
+      bottom: 109px;
+      left: 50px;
       z-index: 9000;
       opacity: 0;
       transform: translateY(12px);
