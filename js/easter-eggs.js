@@ -47,10 +47,9 @@ const EasterEggs = (() => {
 
   /* ── ACHIEVEMENT TOAST ───────────────────── */
   function showAchievement(icon, title, desc) {
-    // تحقق من الذاكرة أولاً ثم من localStorage
     if (achievements.has(title)) return;
     if (isUnlocked(title)) {
-      achievements.add(title); // sync in-memory
+      achievements.add(title);
       return;
     }
 
@@ -172,7 +171,6 @@ const EasterEggs = (() => {
   }
 
   function activateCheatMode() {
-    // ← تحقق: إذا سبق تفعيلها، لا تشتغل مجدداً
     if (isUnlocked('KONAMI MASTER')) return;
 
     playKonamiSound();
@@ -226,7 +224,6 @@ const EasterEggs = (() => {
   }
 
   function activateHackMode() {
-    // ← تحقق: إذا سبق تفعيلها، لا تشتغل مجدداً
     if (isUnlocked('GHOST IN THE MACHINE')) return;
 
     playHackSound();
@@ -283,7 +280,6 @@ const EasterEggs = (() => {
 
   /* ══════════════════════════════════════════
      3. TYPE "ROYAL" — THEME SWITCH
-     (هذي مقصودة تكرر، لكن الـ achievement مرة وحدة)
   ══════════════════════════════════════════ */
   const THEMES = [
     { name: 'GOLD',    accent: '#c8a96e', glow: 'rgba(200,169,110,0.4)' },
@@ -294,7 +290,7 @@ const EasterEggs = (() => {
   ];
   let themeIdx = 0;
 
-  function initRoyalTheme() {} // handled in initHackWord keyBuffer
+  function initRoyalTheme() {}
 
   function activateRoyalTheme() {
     royalThemeActive = true;
@@ -319,7 +315,6 @@ const EasterEggs = (() => {
       setTimeout(() => badge.remove(), 500);
     }, 2500);
 
-    // الـ achievement تظهر مرة وحدة فقط (showAchievement تتحكم بذلك تلقائياً)
     showAchievement('🎨', 'CHROMATIC SHIFT', `Theme changed to ${theme.name} — type ROYAL again for next.`);
 
     setTimeout(() => { royalThemeActive = false; }, 1000);
@@ -335,7 +330,6 @@ const EasterEggs = (() => {
     if (isUnlocked('ENTER THE MATRIX')) return;
     if (matrixActive) return;
 
-    // منع التكرار السريع
     const now = Date.now();
     if (initMatrixClick._lastClick && now - initMatrixClick._lastClick < 100) return;
     initMatrixClick._lastClick = now;
@@ -374,7 +368,6 @@ const EasterEggs = (() => {
   }
 
   function activateMatrixRain() {
-    // ← تحقق: إذا سبق تفعيلها، لا تشتغل مجدداً
     if (isUnlocked('ENTER THE MATRIX')) return;
 
     matrixActive = true;
@@ -432,10 +425,8 @@ const EasterEggs = (() => {
   ══════════════════════════════════════════ */
   function initTripleClick() {
     document.addEventListener('DOMContentLoaded', attachTripleClick);
-    // Also run immediately in case DOM is ready
     attachTripleClick();
 
-    // Re-attach after app loads
     setTimeout(attachTripleClick, 2000);
   }
 
@@ -459,7 +450,6 @@ const EasterEggs = (() => {
   }
 
   function handleTripleClick() {
-    // إذا سبق إلغاء قفلها، ما نكمل العدّ أصلاً
     if (isUnlocked('SHADOW PROTOCOL')) return;
 
     tripleClickCount++;
@@ -474,7 +464,6 @@ const EasterEggs = (() => {
   }
 
   function showSecretCard() {
-    // ← تحقق: إذا سبق تفعيلها، لا تشتغل مجدداً
     if (isUnlocked('SHADOW PROTOCOL')) return;
 
     const existing = document.getElementById('ee-secret-card');
@@ -810,7 +799,6 @@ const EasterEggs = (() => {
      PUBLIC INIT
   ══════════════════════════════════════════ */
   function init() {
-    // مزامنة الـ achievements المحفوظة مع الذاكرة عند البداية
     getUnlocked().forEach(title => achievements.add(title));
 
     injectStyles();
@@ -821,8 +809,7 @@ const EasterEggs = (() => {
   }
 
   /* ══════════════════════════════════════════
-     PUBLIC RESET (اختياري — لإعادة تعيين كل شيء)
-     استخدام: EasterEggs.reset()
+    EasterEggs.reset()
   ══════════════════════════════════════════ */
   function reset() {
     localStorage.removeItem(STORAGE_KEY);
