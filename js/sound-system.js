@@ -184,21 +184,28 @@ const SoundSystem = (() => {
   }
 
   audio = bgEl || new Audio();
-  audio.volume = masterVolume;
-  audio.loop = true;
+audio.volume = masterVolume;
+audio.loop = true;
+audio.onended = () => {
+  audio.currentTime = 0;
+  audio.play().catch(() => {});
+};
+audio.ontimeupdate = updateProgress;
+audio.onloadedmetadata = updateProgress;
+audio.onplay = () => {
+  isPlaying = true;
+  updatePlayBtn();
+};
+audio.onpause = () => {
+  isPlaying = false;
+  updatePlayBtn();
+};
 
-  audio.onended = null;
-  audio.ontimeupdate = updateProgress;
-  audio.onloadedmetadata = updateProgress;
-
-  audio.onplay = () => {
-    isPlaying = true;
-    updatePlayBtn();
-  };
-  audio.onpause = () => {
-    isPlaying = false;
-    updatePlayBtn();
-  };
+document.addEventListener('visibilitychange', () => {
+  if (!document.hidden && audio && audio.paused && isPlaying) {
+    audio.play().catch(() => {});
+  }
+});
 
   try {
     const ctx = getCtx();
