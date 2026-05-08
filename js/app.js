@@ -69,7 +69,7 @@ async function startBoot() {
 window.addEventListener('DOMContentLoaded', () => {
   Particles.init();
   Loader.init();
-  SoundSystem.init(); // ← هنا، قبل كل شي
+  SoundSystem.init();
   setTimeout(() => System.initCursor(), 50);
   initHeroBtnEvent();
 });
