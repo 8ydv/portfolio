@@ -1,15 +1,9 @@
-/* ═══════════════════════════════════════════════
-   ROYAL SYSTEMS — PARTICLE SYSTEM
-   particles.js · Canvas Background Animation
-═══════════════════════════════════════════════ */
-
 const Particles = (() => {
 
   let canvas, ctx, particles, rafId;
   let W = 0, H = 0;
   let mouseX = -999, mouseY = -999;
 
-  /* ── CONFIG ──────────────────────────────── */
   const CFG = {
     count:        55,
     speedMin:     0.3,
@@ -22,7 +16,6 @@ const Particles = (() => {
     mouseForce:   0.012,
   };
 
-  /* ── PARTICLE CLASS ──────────────────────── */
   class Particle {
     constructor() { this.reset(true); }
 
@@ -36,7 +29,6 @@ const Particles = (() => {
     }
 
     update() {
-      // Mouse repulsion
       const dx = this.x - mouseX;
       const dy = this.y - mouseY;
       const dist = Math.sqrt(dx * dx + dy * dy);
@@ -46,7 +38,7 @@ const Particles = (() => {
         this.vx += (dx / dist) * force * CFG.mouseForce * 8;
       }
 
-      this.vx *= 0.92; // damping
+      this.vx *= 0.92;
       this.x  += this.vx;
       this.y  += this.speed;
 
@@ -59,7 +51,6 @@ const Particles = (() => {
     }
   }
 
-  /* ── INIT ────────────────────────────────── */
   function init() {
     canvas = document.getElementById('bg-canvas');
     if (!canvas) return;
@@ -91,20 +82,16 @@ const Particles = (() => {
     mouseY = e.clientY;
   }
 
-  /* ── RENDER LOOP ─────────────────────────── */
   function render() {
     ctx.clearRect(0, 0, W, H);
 
-    // Deep black background
     ctx.fillStyle = '#010101';
     ctx.globalAlpha = 1;
     ctx.fillRect(0, 0, W, H);
 
-    // Particles
     ctx.fillStyle = '#ffffff';
     particles.forEach(p => { p.update(); p.draw(ctx); });
 
-    // Subtle vignette
     const vg = ctx.createRadialGradient(W/2, H/2, H*0.3, W/2, H/2, H*0.85);
     vg.addColorStop(0, 'rgba(0,0,0,0)');
     vg.addColorStop(1, 'rgba(0,0,0,0.55)');
@@ -115,12 +102,10 @@ const Particles = (() => {
     rafId = requestAnimationFrame(render);
   }
 
-  /* ── PUBLIC API ──────────────────────────── */
   function pause()  { cancelAnimationFrame(rafId); }
   function resume() { render(); }
 
   function setIntensity(level) {
-    // level: 0 = idle, 1 = active, 2 = alert
     switch(level) {
       case 0: CFG.speedMax = 0.8;  CFG.alphaMax = 0.1;  break;
       case 1: CFG.speedMax = 1.4;  CFG.alphaMax = 0.18; break;
