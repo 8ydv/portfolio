@@ -181,15 +181,15 @@ const ViewCounter = (() => {
     }
 
     @media (max-width: 768px) {
-      .vc-widget {
-        bottom: 20px;
-        left: 50%;
-        transform: translateX(-50%) translateY(12px);
-      }
-      .vc-widget.vc-show {
-        transform: translateX(-50%) translateY(0);
-      }
-    }
+  .vc-widget {
+    bottom: 20px;
+    left: 16px;
+    transform: translateY(12px);
+  }
+  .vc-widget.vc-show {
+    transform: translateY(0);
+  }
+}
 
     `;
     document.head.appendChild(style);
