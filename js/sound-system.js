@@ -668,12 +668,15 @@ document.addEventListener('visibilitychange', () => {
   /* ══════════════════════════════════════════
      PUBLIC INIT
   ══════════════════════════════════════════ */
-  function init(tracks = []) {
-    injectStyles();
-    Player.init(tracks);
-    // attachUISounds بعد تفاعل المستخدم
-    document.addEventListener('click', () => attachUISounds(), { once: true });
-  }
+function init(tracks = []) {
+  injectStyles();
+  Player.init(tracks);
+  document.addEventListener('click', () => attachUISounds(), { once: true });
+}
+
+function preInit() {
+  injectStyles();
+}
 
   return { init, UI, Player, setMasterVolume, toggleMute, getAnalyser: () => analyser };
 
