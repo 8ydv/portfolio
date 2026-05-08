@@ -329,29 +329,31 @@ const EasterEggs = (() => {
      4. CLICK SCREEN 10 TIMES — MATRIX RAIN
   ══════════════════════════════════════════ */
   function initMatrixClick() {
-    document.addEventListener('click', (e) => {
-      // Skip if clicking on interactive elements
-      if (e.target.closest('button, a, .nav__item, .proj-card, input, #ee-secret-msg')) return;
+  document.addEventListener('click', (e) => {
+    
+    if (e.target.closest('button, a, .nav__item, .proj-card, input, #ee-secret-msg, #ss-player')) return;
+    if (isUnlocked('ENTER THE MATRIX')) return;
+    if (matrixActive) return;
 
-      // إذا سبق إلغاء قفلها، ما نكمل العدّ أصلاً
-      if (isUnlocked('ENTER THE MATRIX')) return;
+    // منع التكرار السريع
+    const now = Date.now();
+    if (initMatrixClick._lastClick && now - initMatrixClick._lastClick < 100) return;
+    initMatrixClick._lastClick = now;
 
-      clickCount++;
-      playBeep(300 + clickCount * 50, 30, 'square', 0.03);
+    clickCount++;
+    playBeep(300 + clickCount * 50, 30, 'square', 0.03);
+    showClickProgress(clickCount);
 
-      // Show progress dots
-      showClickProgress(clickCount);
+    clearTimeout(clickTimer);
+    clickTimer = setTimeout(() => { clickCount = 0; }, 3000);
 
+    if (clickCount >= 10) {
+      clickCount = 0;
       clearTimeout(clickTimer);
-      clickTimer = setTimeout(() => { clickCount = 0; }, 3000);
-
-      if (clickCount >= 10 && !matrixActive) {
-        clickCount = 0;
-        clearTimeout(clickTimer);
-        activateMatrixRain();
-      }
-    });
-  }
+      activateMatrixRain();
+    }
+  });
+}
 
   let progressDots = null;
   function showClickProgress(count) {
