@@ -192,8 +192,6 @@ const ViewCounter = (() => {
     }
 
     `;
-
-    `;
     document.head.appendChild(style);
   }
 
