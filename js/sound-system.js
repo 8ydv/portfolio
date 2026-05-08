@@ -18,7 +18,7 @@ const SoundSystem = (() => {
   let actx = null;
   let masterGain = null;
   let analyser = null;
-  let masterVolume = 0.7;
+  let masterVolume = 0.2;
   let muted = false;
 
   function getCtx() {
@@ -228,7 +228,7 @@ function init(trackList = DEFAULT_TRACKS) {
                 <path class="ss-vol-lines" d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/>
               </svg>
             </button>
-            <input type="range" class="ss-player__vol" id="ss-vol" min="0" max="100" value="70" title="Volume">
+            <input type="range" class="ss-player__vol" id="ss-vol" min="0" max="100" value="20" title="Volume">
           </div>
         </div>
 
