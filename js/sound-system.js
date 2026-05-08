@@ -658,8 +658,21 @@ function init(trackList = DEFAULT_TRACKS) {
      color: rgba(255,255,255,0.2); line-height: 1.8;
     }
      /* ── HIDE CURSOR INSIDE PLAYER ── */
-.ss-player,
+.ss-player {
+  cursor: none;
+}
 .ss-player * {
+  cursor: none !important;
+}
+.ss-player__vol {
+  cursor: none !important;
+  pointer-events: auto;
+}
+.ss-player__vol::-webkit-slider-thumb {
+  cursor: none !important;
+}
+
+.ss-btn, .ss-player__vol, ss-player__vol, .ss-player__progress, .ss-track-item, .ss-player__mute {
   cursor: none !important;
 }
 
