@@ -181,7 +181,7 @@ body.cursor-click #cursor-dot  { transform: translate(-50%, -50%) scale(0.5); }
 .mute-btn {
   background: transparent;
   border: 1px solid rgba(255, 255, 255, 0.1);
-  color: var(--c-text-muted); /* تأكد من وجود المتغير عندك أو استبدله بـ #666 */
+  color: var(--c-text-muted);
   cursor: pointer;
   font-family: 'Share Tech Mono', monospace;
   font-size: 0.7rem;
@@ -195,13 +195,13 @@ body.cursor-click #cursor-dot  { transform: translate(-50%, -50%) scale(0.5); }
 
 .mute-btn:hover {
   background: rgba(255, 255, 255, 0.05);
-  border-color: var(--c-primary); /* لون النيون حقك */
+  border-color: var(--c-primary);
   color: #fff;
   box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
 }
 
 .mute-btn.is-muted {
-  color: #ff3e3e; /* لون أحمر خفيف عند الكتم */
+  color: #ff3e3e;
   border-color: rgba(255, 62, 62, 0.3);
 }
 
