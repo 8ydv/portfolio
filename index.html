@@ -1,389 +1,281 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Royal Systems — Portfolio of Mohammed, Game Systems Developer">
-  <meta name="theme-color" content="#010101">
-  <title>Royal Systems</title>
-
-  <link rel="icon" type="image/png" href="assets/images/logo.ico">
-  <link rel="apple-touch-icon" href="assets/images/logo.ico">
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-  <link rel="stylesheet" href="css/style.css">
-  <link rel="stylesheet" href="css/animations.css">
-  <link rel="stylesheet" href="css/responsive.css">
-
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Share+Tech+Mono&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Royal Menu — By Mèdo</title>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600;700&family=Exo+2:wght@300;400;600;700&family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
 </head>
-
 <body>
 
-  <!-- Skip to content -->
-  <a href="#main" class="sr-only" style="position:fixed;top:4px;left:4px;z-index:999999;background:#fff;color:#000;padding:8px 16px;font-size:0.75rem;">
-    Skip to content
+<div id="cursor">
+  <div id="cursor-outer"></div>
+  <div id="cursor-inner"></div>
+  <div id="cursor-corner-tl"></div>
+  <div id="cursor-corner-tr"></div>
+  <div id="cursor-corner-bl"></div>
+  <div id="cursor-corner-br"></div>
+</div>
+
+<canvas id="bgCanvas"></canvas>
+
+<div id="introScreen">
+  <div class="intro-logo">
+    <h1>Royal Menu</h1>
+    <div class="intro-divider"></div>
+    <div class="by-line">BY MÈDO</div>
+  </div>
+  <button class="enter-btn" onclick="enterSite()">
+    <span class="btn-corner corner-tl"></span>
+    <span class="btn-corner corner-tr"></span>
+    <span class="btn-corner corner-bl"></span>
+    <span class="btn-corner corner-br"></span>
+    ENTER
+  </button>
+</div>
+
+<div id="mainLayout">
+
+  <div class="owner-card">
+    <div class="owner-inner">
+      <div class="card-corner tl"></div>
+      <div class="card-corner tr"></div>
+      <div class="card-corner bl"></div>
+      <div class="card-corner br"></div>
+
+      <div class="avatar-wrap">
+  <div class="avatar-ring"></div>
+
+  <div class="avatar-placeholder" id="avatarEl">
+    <img src="media/IMG_6590.jpg" alt="Avatar"
+    width="96" height="96"
+    style="width:100%;height:100%;object-fit:cover;border-radius:50%;">
+  </div>
+</div>
+
+<div class="owner-name-row">
+  <div class="owner-name">Mèdo</div>
+
+  <div class="verified-badge">
+    <svg viewBox="0 0 12 12">
+      <path d="M5 8.5L2.5 6l1-1L5 6.5l3.5-3.5 1 1z"/>
+    </svg>
+  </div>
+</div>
+
+<div class="owner-title">MENU DEVELOPER • ROYAL MENU</div>
+
+<div class="divider-line"></div>
+
+<div class="socials-label">Follow</div>
+
+<div class="socials-grid">
+
+  <a class="social-icon-btn"
+     href="https://www.instagram.com/8ydv"
+     target="_blank">
+
+    <svg viewBox="0 0 24 24" fill="currentColor">
+      <path d="M7 2C4.243 2 2 4.243 2 7v10c0 2.757 2.243 5 5 5h10c2.757 0 5-2.243 5-5V7c0-2.757-2.243-5-5-5H7zm0 2h10c1.654 0 3 1.346 3 3v10c0 1.654-1.346 3-3 3H7c-1.654 0-3-1.346-3-3V7c0-1.654 1.346-3 3-3zm5 2.8A5.2 5.2 0 1 0 17.2 12 5.206 5.206 0 0 0 12 6.8zm0 2A3.2 3.2 0 1 1 8.8 12 3.204 3.204 0 0 1 12 8.8zm5.25-3.3a1.25 1.25 0 1 0 1.25 1.25 1.252 1.252 0 0 0-1.25-1.25z"/>
+    </svg>
+
   </a>
 
-  <!-- Background -->
-  <canvas id="bg-canvas" aria-hidden="true"></canvas>
-  <div class="scanlines"  aria-hidden="true"></div>
-  <div class="noise"      aria-hidden="true"></div>
-  <div class="scan-sweep" aria-hidden="true"></div>
+  <a class="social-icon-btn"
+     href="https://www.tiktok.com/@iczer21"
+     target="_blank">
 
-  <!-- Corner decorations -->
-  <div class="corner-deco corner-deco--tl" aria-hidden="true"></div>
-  <div class="corner-deco corner-deco--tr" aria-hidden="true"></div>
-  <div class="corner-deco corner-deco--bl" aria-hidden="true"></div>
-  <div class="corner-deco corner-deco--br" aria-hidden="true"></div>
-
-  <!-- Custom cursor -->
-  <div id="cursor-dot"  aria-hidden="true"></div>
-  <div id="cursor-ring" aria-hidden="true"></div>
-
-  <!-- System clock -->
-  <div id="sys-clock" aria-hidden="true"></div>
-
-  <!-- Audio -->
-  <audio id="bgMusic" loop preload="none"></audio>
-
-  <!-- ══════════════════════════════════════
-       HERO SCREEN
-  ══════════════════════════════════════ -->
-  <section id="hero" role="banner" aria-label="Welcome screen">
-    <div class="hero__eyebrow" aria-hidden="true">[ SYSTEM INITIALIZED ]</div>
-    <h1 class="hero__title">
-      <span class="hero__title-line">ROYAL</span>
-    </h1>
-    <p class="hero__sub">GAME SYSTEMS DEVELOPER · PORTFOLIO</p>
-    <div class="hero__divider" aria-hidden="true"></div>
-    <button id="hero-btn" class="hero__btn" aria-label="Initialize access to portfolio">
-      INITIALIZE ACCESS
-    </button>
-    <div class="hero__version" aria-hidden="true">ROYAL_OS v4.0.0</div>
-  </section>
-
-  <!-- ══════════════════════════════════════
-       LOADER
-  ══════════════════════════════════════ -->
-  <div id="loader" role="status" aria-label="Loading system" aria-live="polite">
-    <div class="loader__inner">
-      <div class="loader__header">
-        <span id="loader-msg" class="loader__msg">MOUNTING_FILESYSTEM</span>
-        <span id="loader-pct" class="loader__pct">0%</span>
-      </div>
-      <div class="loader__track" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
-        <div id="loader-fill" class="loader__fill"></div>
-      </div>
-      <div id="loader-log" class="loader__log" aria-hidden="true"></div>
-    </div>
-  </div>
-
-  <!-- ══════════════════════════════════════
-       APP
-  ══════════════════════════════════════ -->
-  <div id="app" aria-hidden="true">
-
-    <!-- HEADER -->
-    <header id="header" role="banner">
-      <div class="header__brand">
-        <div class="header__logo" aria-label="Royal Systems">ROYAL_OS</div>
-        <div class="header__badge" aria-hidden="true">ROYAL PROTOCOL V4</div>
-      </div>
-      <div class="header__meta" aria-label="System status">
-        <div class="header__stat">
-          <div class="header__stat-dot" aria-hidden="true"></div>
-          ONLINE
-        </div>
-        <div class="header__stat" aria-hidden="true">KERNEL: OPTIMAL</div>
-        <div class="header__stat" id="header-time" aria-hidden="true">NET: 0.14ms</div>
-      </div>
-      <button class="header__exit" onclick="exitSequence()" aria-label="Terminate connection and return to home">
-        [ TERMINATE ]
-      </button>
-    </header>
-
-    <!-- SIDEBAR -->
-    <aside id="sidebar" aria-label="Navigation">
-      <div class="sidebar__section">
-        <div class="sidebar__label" aria-hidden="true">NAVIGATION</div>
-      </div>
-      <nav aria-label="Main navigation">
-        <div class="nav__item" tabindex="0" role="tab" aria-selected="false" aria-controls="pane-dashboard">
-          <span class="nav__num" aria-hidden="true">01</span>
-          DASHBOARD
-        </div>
-        <div class="nav__item" tabindex="0" role="tab" aria-selected="false" aria-controls="pane-projects">
-          <span class="nav__num" aria-hidden="true">02</span>
-          PROJECTS
-        </div>
-        <div class="nav__item" tabindex="0" role="tab" aria-selected="false" aria-controls="pane-about">
-          <span class="nav__num" aria-hidden="true">03</span>
-          ABOUT
-        </div>
-      </nav>
-      <div class="sidebar__bottom">
-        <div class="sidebar__sys-info" aria-hidden="true">
-          <div>SESSION_ID: RLY-7734</div>
-          <div>CLEARANCE: LEVEL_7</div>
-          <div>ENC: AES-256-GCM</div>
-        </div>
-      </div>
-    </aside>
-
-    <!-- MAIN -->
-    <main id="main" aria-label="Main content">
-
-      <!-- ── PANE: DASHBOARD ── -->
-      <section class="pane" id="pane-dashboard" role="tabpanel" aria-label="Dashboard">
-        <div class="pane__header">
-          <div class="pane__title-group">
-            <div class="pane__eyebrow">SYSTEM_STATUS</div>
-            <h2 class="pane__title">DASHBOARD</h2>
-          </div>
-          <div class="pane__count" aria-hidden="true">ROYAL_OS // ACTIVE</div>
-        </div>
-
-        <div class="stat-grid" role="list" aria-label="Statistics">
-          <div class="stat-card" role="listitem">
-            <div class="stat-card__label">TOTAL PROJECTS</div>
-            <div class="stat-card__value" id="stat-projects" data-countup="3" data-suffix="" data-decimals="0">—</div>
-            <div class="stat-card__sub">TITLES ARCHIVED</div>
-          </div>
-          <div class="stat-card" role="listitem">
-            <div class="stat-card__label">HOURS WORKED</div>
-            <div class="stat-card__value" id="stat-hours" data-countup="295" data-suffix="h" data-decimals="0">—</div>
-            <div class="stat-card__sub">ACROSS ALL TITLES</div>
-          </div>
-          <div class="stat-card" role="listitem">
-            <div class="stat-card__label">ACHIEVEMENTS</div>
-            <div class="stat-card__value" id="stat-achievements" data-countup="119" data-suffix="" data-decimals="0">—</div>
-            <div class="stat-card__sub">TOTAL UNLOCKED</div>
-          </div>
-          <div class="stat-card" role="listitem">
-            <div class="stat-card__label">EXPERIENCE</div>
-            <div class="stat-card__value" id="stat-years" data-countup="2" data-suffix="Y" data-decimals="0">—</div>
-            <div class="stat-card__sub">ACTIVE YEARS</div>
-          </div>
-        </div>
-
-        <div class="dash-grid">
-          <div class="dash-card">
-            <div class="dash-card__title">PROFICIENCY_MATRIX</div>
-            <div class="skill-item">
-              <div class="skill-item__header">
-                <span class="skill-item__name">HTML / CSS / JS</span>
-                <span class="skill-item__pct">92%</span>
-              </div>
-              <div class="skill-item__track"><div class="skill-item__fill" data-width="92%"></div></div>
-            </div>
-            <div class="skill-item">
-              <div class="skill-item__header">
-                <span class="skill-item__name">UI / UX DESIGN</span>
-                <span class="skill-item__pct">85%</span>
-              </div>
-              <div class="skill-item__track"><div class="skill-item__fill" data-width="85%"></div></div>
-            </div>
-            <div class="skill-item">
-              <div class="skill-item__header">
-                <span class="skill-item__name">GAME SYSTEMS</span>
-                <span class="skill-item__pct">78%</span>
-              </div>
-              <div class="skill-item__track"><div class="skill-item__fill" data-width="78%"></div></div>
-            </div>
-            <div class="skill-item">
-              <div class="skill-item__header">
-                <span class="skill-item__name">INTERACTIVE MEDIA</span>
-                <span class="skill-item__pct">80%</span>
-              </div>
-              <div class="skill-item__track"><div class="skill-item__fill" data-width="80%"></div></div>
-            </div>
-            <div class="skill-item">
-              <div class="skill-item__header">
-                <span class="skill-item__name">VISUAL DESIGN</span>
-                <span class="skill-item__pct">88%</span>
-              </div>
-              <div class="skill-item__track"><div class="skill-item__fill" data-width="88%"></div></div>
-            </div>
-          </div>
-
-          <div class="dash-card">
-            <div class="dash-card__title">RECENT_ACTIVITY_LOG</div>
-            <div class="activity-item">
-              <div class="activity-item__dot"></div>
-              <div class="activity-item__text">AW_UI_MOD_UPDATED</div>
-              <div class="activity-item__time">2H AGO</div>
-            </div>
-            <div class="activity-item">
-              <div class="activity-item__dot"></div>
-              <div class="activity-item__text">MWR_MENU_REDESIGNED</div>
-              <div class="activity-item__time">1D AGO</div>
-            </div>
-            <div class="activity-item">
-              <div class="activity-item__dot"></div>
-              <div class="activity-item__text">WW2_HUD_COMPLETED</div>
-              <div class="activity-item__time">3D AGO</div>
-            </div>
-            <div class="activity-item">
-              <div class="activity-item__dot"></div>
-              <div class="activity-item__text">PORTFOLIO_UPDATED</div>
-              <div class="activity-item__time">1W AGO</div>
-            </div>
-            <div class="activity-item">
-              <div class="activity-item__dot"></div>
-              <div class="activity-item__text">NEW_PROJECT_ARCHIVED</div>
-              <div class="activity-item__time">2W AGO</div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- ── PANE: PROJECTS ── -->
-      <section class="pane" id="pane-projects" role="tabpanel" aria-label="Projects">
-        <div class="pane__header">
-          <div class="pane__title-group">
-            <div class="pane__eyebrow">ACTIVE_REGISTRY</div>
-            <h2 class="pane__title">PROJECTS</h2>
-          </div>
-          <div class="pane__count" id="projects-count" aria-live="polite"></div>
-        </div>
-        <div class="projects-grid" id="projects-grid" role="list" aria-label="Game projects"></div>
-      </section>
-
-      <!-- ── PANE: ABOUT ── -->
-      <section class="pane" id="pane-about" role="tabpanel" aria-label="About">
-        <div class="pane__header">
-          <div class="pane__title-group">
-            <div class="pane__eyebrow">OPERATOR_PROFILE</div>
-            <h2 class="pane__title">ABOUT</h2>
-          </div>
-        </div>
-        <div class="about-layout">
-          <div class="about-id-card">
-            <div class="about__avatar" aria-hidden="true">MR</div>
-            <!-- بعد -->
-<div class="about__name" data-owner-name>
-  MOHAMMED
-  <span class="verified-badge" title="Verified">
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-      <path d="M12 2L14.09 8.26L21 9.27L16 14.14L17.18 21.02L12 17.77L6.82 21.02L8 14.14L3 9.27L9.91 8.26L12 2Z" fill="#c8a96e" stroke="#c8a96e" stroke-width="1.5" stroke-linejoin="round"/>
-      <path d="M9 12L11 14L15 10" stroke="#000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <svg viewBox="0 0 24 24" fill="currentColor">
+      <path d="M19.589 6.686a4.793 4.793 0 0 1-3.77-4.237h-3.454v13.67a2.896 2.896 0 1 1-2.896-2.896c.287 0 .562.043.822.12V9.827a6.349 6.349 0 0 0-.822-.055A6.35 6.35 0 1 0 15.82 16.12V9.167a8.192 8.192 0 0 0 4.77 1.526V6.686z"/>
     </svg>
-  </span>
+
+  </a>
+
+  <a class="social-icon-btn"
+     href="https://discordapp.com/users/755456390717374635"
+     target="_blank">
+
+    <svg viewBox="0 0 24 24" fill="currentColor">
+
+      <path d="M20.317 4.3698a19.7913 19.7913 0 0 0-4.8851-1.5152.0741.0741 0 0 0-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.6179-1.2495.077.077 0 0 0-.0785-.037A19.7363 19.7363 0 0 0 3.677 4.3698a.0699.0699 0 0 0-.0321.0277C.5334 9.0467-.3202 13.5799.0997 18.0578a.0824.0824 0 0 0 .0312.0561 19.9 19.9 0 0 0 5.9931 3.03.078.078 0 0 0 .0842-.0276c.4613-.6304.8731-1.2952 1.226-1.9942a.0761.0761 0 0 0-.0416-.1057 13.107 13.107 0 0 1-1.872-0.892.077.077 0 0 1-.0076-.1277c.1258-.0943.2498-.1923.3687-.2914a.0743.0743 0 0 1 .0776-.0105c3.9278 1.7938 8.18 1.7938 12.0614 0a.0743.0743 0 0 1 .0776.0105c.119.0991.2429.1971.3688.2914a.077.077 0 0 1-.0066.1277 12.299 12.299 0 0 1-1.873.892.0766.0766 0 0 0-.0407.1067c.3604.698.7722 1.3628 1.225 1.9932a.077.077 0 0 0 .0842.0286 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .0312-.0551c.5004-5.177-.8382-9.6742-3.5485-13.6591a.061.061 0 0 0-.0312-.0281z"/>
+
+      <ellipse cx="9.2" cy="12.3" rx="1.45" ry="1.6" fill="#0b0b0b"/>
+      <ellipse cx="14.8" cy="12.3" rx="1.45" ry="1.6" fill="#0b0b0b"/>
+
+    </svg>
+
+  </a>
+
+  <a class="social-icon-btn"
+     href="https://x.com/i8ydv"
+     target="_blank">
+
+    <svg viewBox="0 0 1200 1227" fill="currentColor">
+
+      <path d="M714.163 519.284L1160.89 0H1055.3L667.137 450.887L357.328 0H0L468.492 681.821L0 1226.37H105.543L515.239 750.594L842.672 1226.37H1200L714.137 519.284H714.163ZM568.731 688.315L521.404 620.617L145.011 82.1198H307.615L611.303 516.233L658.63 583.931L1055.35 1151.96H892.744L568.731 688.341V688.315Z"/>
+
+    </svg>
+
+  </a>
+
+  <a class="social-icon-btn"
+     href="https://www.youtube.com/@Medo-t8c"
+     target="_blank">
+
+    <svg viewBox="0 0 24 24" fill="currentColor">
+      <path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2 31.4 31.4 0 0 0 0 12a31.4 31.4 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1A31.4 31.4 0 0 0 24 12a31.4 31.4 0 0 0-.5-5.8zM9.75 15.5v-7L16 12l-6.25 3.5z"/>
+    </svg>
+
+  </a>
+
 </div>
-            <div class="about__title" data-owner-title>GAME SYSTEMS DEVELOPER</div>
-            <p class="about__bio" id="owner-bio">
-              Passionate about game development and interactive design.
-              Specializing in front-end systems and building polished digital experiences.
-            </p>
-          </div>
-          <div class="about-right">
-            <div class="about-section">
-              <div class="about-section__title">SKILL_MODULES</div>
-              <div class="skills-list" id="skills-list"></div>
-            </div>
-            <div class="about-section">
-              <div class="about-section__title">CONTACT_CHANNELS</div>
-              <div class="contact-list">
-                <div class="contact-item">
-                  <span class="contact-item__icon">EMAIL</span>
-                  <span id="contact-email">otiebym@gmail.com</span>
-                </div>
-                <div class="contact-item">
-                  <span class="contact-item__icon">SUPPORT</span>
-                  <span id="contact-support">https://ko-fi.com/imedo</span>
-                </div>
-                <div class="contact-item">
-                  <span class="contact-item__icon">DISCORD</span>
-                  <span id="contact-discord">9id.</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+</div>
+</div>
 
-    </main>
-  </div>
+<div class="menu-panel">
+  <div class="menu-container">
 
-  <!-- ══════════════════════════════════════
-       PROJECT DETAIL OVERLAY
-  ══════════════════════════════════════ -->
-  <div id="proj-detail" class="proj-detail" role="dialog" aria-modal="true" aria-label="Project details" aria-hidden="true">
-    <div class="proj-detail__box">
+    <div class="menu-header">
+      <h2>Royal Menu</h2>
+      <div class="menu-by">By Mèdo</div>
+    </div>
 
-      <div class="proj-detail__header">
-        <img id="detail-cover" class="proj-detail__cover" src="" alt="Project cover">
-        <div id="detail-cover-placeholder" class="proj-detail__cover-placeholder" style="display:none;"></div>
-        <div class="proj-detail__header-info">
-          <div class="proj-detail__uid" id="detail-uid"></div>
-          <h2 class="proj-detail__title" id="detail-title"></h2>
-          <div id="detail-subtitle" style="font-family:var(--f-mono);font-size:0.5rem;letter-spacing:4px;color:#666;margin-top:6px;"></div>
-        </div>
-        <button class="proj-detail__close" onclick="closeDetail()" aria-label="Close project details">
-          [ CLOSE ]
-        </button>
+    <div class="menu-item" onclick="openItem(this, 'Main Mods', 'Access powerful gameplay modifications and advanced in-game features.')">
+      <div class="menu-item-dot"></div>
+      <span>Main Mods</span>
+      <div class="menu-item-arrow">›</div>
+    </div>
+
+    <div class="menu-items" id="menuItems">
+
+      <div class="menu-item" onclick="openItem(this, 'Weapon Menu', 'Choose from a full collection of weapons including rifles, SMGs, snipers and more.')">
+        <div class="menu-item-dot"></div>
+        <span>Weapon Menu</span>
+        <div class="menu-item-arrow">›</div>
       </div>
 
-      <div class="proj-detail__showcase">
-        <img id="detail-showcase" class="proj-detail__showcase-img" src="" alt="Project showcase" style="display:none;">
+      <div class="menu-item" onclick="openItem(this, 'Lobby Menu', 'Manage match settings, bots, streaks, XP lobbies and game controls.')">
+        <div class="menu-item-dot"></div>
+        <span>Lobby Menu</span>
+        <div class="menu-item-arrow">›</div>
       </div>
 
-      <div class="proj-detail__body">
-        <div>
-          <div class="proj-detail__info-row">
-            <span class="proj-detail__info-label">YEAR</span>
-            <span class="proj-detail__info-val" id="detail-year"></span>
-          </div>
-          <div class="proj-detail__info-row">
-            <span class="proj-detail__info-label">GENRE</span>
-            <span class="proj-detail__info-val" id="detail-genre"></span>
-          </div>
-          <div class="proj-detail__info-row">
-            <span class="proj-detail__info-label">PLATFORM</span>
-            <span class="proj-detail__info-val" id="detail-platform"></span>
-          </div>
-          <div class="proj-detail__info-row">
-            <span class="proj-detail__info-label">STATUS</span>
-            <span class="proj-detail__info-val" id="detail-status"></span>
-          </div>
-          <div class="proj-detail__info-row">
-            <span class="proj-detail__info-label">RATING</span>
-            <span class="proj-detail__info-val" id="detail-rating"></span>
-          </div>
-          <div class="proj-detail__info-row">
-            <span class="proj-detail__info-label">HOURS</span>
-            <span class="proj-detail__info-val" id="detail-hours"></span>
-          </div>
-          <div class="proj-detail__info-row">
-            <span class="proj-detail__info-label">ACHIEVEMENTS</span>
-            <span class="proj-detail__info-val" id="detail-achievements"></span>
-          </div>
-        </div>
-        <div>
-          <div style="font-family:var(--f-mono);font-size:0.48rem;letter-spacing:4px;color:var(--c-text-muted);margin-bottom:12px;">DESCRIPTION</div>
-          <p class="proj-detail__desc" id="detail-desc"></p>
-          <div style="font-family:var(--f-mono);font-size:0.48rem;letter-spacing:4px;color:var(--c-text-muted);margin-top:24px;margin-bottom:12px;">TAGS</div>
-          <div class="proj-card__meta" id="detail-tags" style="margin-top:0;"></div>
-        </div>
+      <div class="menu-item" onclick="openItem(this, 'Account Menu', 'Unlock ranks, prestige rewards, emblems and account customizations.')">
+        <div class="menu-item-dot"></div>
+        <span>Account Menu</span>
+        <div class="menu-item-arrow">›</div>
+      </div>
+
+      <div class="menu-item" onclick="openItem(this, 'Fun Menu', 'Activate fun gameplay effects, teleportation tools and unique visual actions.')">
+        <div class="menu-item-dot"></div>
+        <span>Fun Menu</span>
+        <div class="menu-item-arrow">›</div>
+      </div>
+
+      <div class="menu-item" onclick="openItem(this, 'Bullet Menu', 'Modify bullet behavior with explosive, laser, RPG and teleport effects.')">
+        <div class="menu-item-dot"></div>
+        <span>Bullet Menu</span>
+        <div class="menu-item-arrow">›</div>
+      </div>
+
+      <div class="menu-item" onclick="openItem(this, 'Perks Menu', 'Enable powerful perks including fast reload, scavenger and silent movement.')">
+        <div class="menu-item-dot"></div>
+        <span>Perks Menu</span>
+        <div class="menu-item-arrow">›</div>
+      </div>
+
+      <div class="menu-item" onclick="openItem(this, 'Forge Menu', 'Access special crafting tools, custom equipment and advanced utilities.')">
+        <div class="menu-item-dot"></div>
+        <span>Forge Menu</span>
+        <div class="menu-item-arrow">›</div>
+      </div>
+
+      <div class="menu-item" onclick="openItem(this, 'Players Menu', 'Interact with players using teleportation, moderation and control features.')">
+        <div class="menu-item-dot"></div>
+        <span>Players Menu</span>
+        <div class="menu-item-arrow">›</div>
+      </div>
+
+      <div class="menu-item" onclick="openItem(this, 'Cheaters Menu', 'Access advanced targeting tools, ESP features, UAV systems and combat enhancements.')">
+        <div class="menu-item-dot"></div>
+        <span>Cheaters Menu</span>
+        <div class="menu-item-arrow">›</div>
+      </div>
+
+      <div class="menu-item" onclick="openItem(this, 'Message Menu', 'Send preset chat messages, alerts, reactions and custom in-game taunts instantly.')">
+        <div class="menu-item-dot"></div>
+        <span>Message Menu</span>
+        <div class="menu-item-arrow">›</div>
+      </div>
+
+      <div class="menu-item" onclick="openItem(this, 'Theme Menu', 'Customize the menu appearance with premium themes and visual styles.')">
+        <div class="menu-item-dot"></div>
+        <span>Theme Menu</span>
+        <div class="menu-item-arrow">›</div>
       </div>
 
     </div>
   </div>
+</div>
 
-  <!-- ══════════════════════════════════════
-       SCRIPTS
-  ══════════════════════════════════════ -->
-  <script src="js/particles.js"></script>
-  <script src="js/loader.js"></script>
-  <script src="js/tabs.js"></script>
-  <script src="js/system.js"></script>
-  <script src="js/easter-eggs.js"></script>
-  <script src="js/sound-system.js"></script>
-  <script src="js/view-counter.js"></script>
-  <script src="js/app.js"></script>
+<div class="overlay-backdrop" id="backdrop" onclick="closePopup()"></div>
+
+<div class="content-popup" id="contentPopup">
+  <button class="popup-close" onclick="closePopup()">✕</button>
+  <div class="popup-title" id="popupTitle"></div>
+  <div class="popup-desc" id="popupDesc"></div>
+</div>
+
+<div id="audioBar">
+
+  <button class="audio-play-btn" id="playBtn" onclick="toggleAudio()">
+    <svg id="playIcon" viewBox="0 0 12 12">
+      <path d="M3 2l7 4-7 4z"/>
+    </svg>
+
+    <svg id="pauseIcon" viewBox="0 0 12 12" style="display:none">
+      <rect x="2" y="2" width="3" height="8"/>
+      <rect x="7" y="2" width="3" height="8"/>
+    </svg>
+  </button>
+
+  <div class="audio-info">
+    <div class="audio-title">BACKGROUND THEME</div>
+
+    <div class="audio-bars" id="audioBars">
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+    </div>
+  </div>
+
+  <div class="volume-wrap">
+    <div class="volume-icon">
+      <svg viewBox="0 0 24 24">
+        <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+      </svg>
+    </div>
+
+    <input type="range"
+      class="volume-slider"
+      id="volSlider"
+      min="0"
+      max="100"
+      value="70"
+      oninput="setVolume(this.value)"
+      style="--val:70%">
+  </div>
+
+</div>
+
+<audio id="bgAudio" loop preload="none">
+  <source src="media/audio.mp3" type="audio/mpeg">
+</audio>
+
+<script src="js/script.js"></script>
 
 </body>
 </html>
