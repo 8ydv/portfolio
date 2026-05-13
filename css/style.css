@@ -822,7 +822,7 @@ input[type="range"].volume-slider::-webkit-slider-thumb {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 5px;
+  gap: 6px;
   margin-bottom: 10px;
   color: var(--text-muted);
   font-family: 'Exo 2', sans-serif;
@@ -830,6 +830,18 @@ input[type="range"].volume-slider::-webkit-slider-thumb {
   font-weight: 600;
   letter-spacing: 2px;
   text-transform: uppercase;
+}
+
+.ps-logo-img {
+  width: 20px;
+  height: auto;
+  display: block;
+  flex-shrink: 0;
+  filter: invert(1) brightness(0.5);
+  opacity: 0.85;
+  position: relative;
+  top: 1px;
+  margin-right: 12px;
 }
 
 .supported-games-grid {
@@ -882,6 +894,7 @@ input[type="range"].volume-slider::-webkit-slider-thumb {
   0%, 100% { box-shadow: 0 0 4px var(--accent); opacity: 1; }
   50% { box-shadow: 0 0 10px var(--accent), 0 0 20px rgba(200,169,110,0.3); opacity: 0.7; }
 }
+
 
 @media (max-width: 768px) {
 
@@ -985,6 +998,7 @@ input[type="range"].volume-slider::-webkit-slider-thumb {
     width: 50px;
   }
 }
+
 
 @media (min-width: 1400px) {
   #mainLayout {
