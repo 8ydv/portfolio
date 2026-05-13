@@ -1,39 +1,46 @@
-const cursorEl = document.getElementById('cursor');
-const cursorOuter = document.getElementById('cursor-outer');
-const cursorInner = document.getElementById('cursor-inner');
+const isTouchDevice = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
 
-let mouseX = 0, mouseY = 0;
-let outerX = 0, outerY = 0;
+if (!isTouchDevice) {
+  const cursorEl = document.getElementById('cursor');
+  const cursorOuter = document.getElementById('cursor-outer');
+  const cursorInner = document.getElementById('cursor-inner');
 
-document.addEventListener('mousemove', (e) => {
-  mouseX = e.clientX;
-  mouseY = e.clientY;
-  cursorInner.style.left = mouseX + 'px';
-  cursorInner.style.top = mouseY + 'px';
-});
+  let mouseX = 0, mouseY = 0;
+  let outerX = 0, outerY = 0;
 
-function animateCursor() {
-  outerX += (mouseX - outerX) * 0.12;
-  outerY += (mouseY - outerY) * 0.12;
-  cursorOuter.style.left = outerX + 'px';
-  cursorOuter.style.top = outerY + 'px';
-
-  ['tl','tr','bl','br'].forEach(id => {
-    const el = document.getElementById('cursor-corner-' + id);
-    if (el) {
-      el.style.left = outerX + 'px';
-      el.style.top = outerY + 'px';
-    }
+  document.addEventListener('mousemove', (e) => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+    cursorInner.style.left = mouseX + 'px';
+    cursorInner.style.top = mouseY + 'px';
   });
 
-  requestAnimationFrame(animateCursor);
-}
-animateCursor();
+  function animateCursor() {
+    outerX += (mouseX - outerX) * 0.12;
+    outerY += (mouseY - outerY) * 0.12;
+    cursorOuter.style.left = outerX + 'px';
+    cursorOuter.style.top = outerY + 'px';
 
-document.querySelectorAll('button, a, .menu-item, .enter-btn').forEach(el => {
-  el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
-  el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
-});
+    ['tl','tr','bl','br'].forEach(id => {
+      const el = document.getElementById('cursor-corner-' + id);
+      if (el) {
+        el.style.left = outerX + 'px';
+        el.style.top = outerY + 'px';
+      }
+    });
+
+    requestAnimationFrame(animateCursor);
+  }
+  animateCursor();
+
+  document.querySelectorAll('button, a, .menu-item, .enter-btn').forEach(el => {
+    el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
+    el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
+  });
+} else {
+  const cursorEl = document.getElementById('cursor');
+  if (cursorEl) cursorEl.style.display = 'none';
+}
 
 const canvas = document.getElementById('bgCanvas');
 const ctx = canvas.getContext('2d');
@@ -131,11 +138,13 @@ function enterSite() {
   const intro = document.getElementById('introScreen');
   const main = document.getElementById('mainLayout');
   const bar = document.getElementById('audioBar');
-  const cursor = document.getElementById('cursor');
 
   intro.classList.add('hidden');
-  cursor.style.display = 'block';
-  cursor.style.zIndex = '99999';
+
+  if (!isTouchDevice) {
+    const cursor = document.getElementById('cursor');
+    if (cursor) { cursor.style.display = 'block'; cursor.style.zIndex = '99999'; }
+  }
 
   setTimeout(() => {
     main.classList.add('visible');
@@ -147,10 +156,12 @@ function enterSite() {
     document.getElementById('playIcon').style.display = 'none';
     document.getElementById('audioBars').classList.add('playing');
 
-    document.querySelectorAll('button, a, .menu-item').forEach(el => {
-      el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
-      el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
-    });
+    if (!isTouchDevice) {
+      document.querySelectorAll('button, a, .menu-item').forEach(el => {
+        el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
+        el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
+      });
+    }
   }, 400);
 }
 
