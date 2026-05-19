@@ -151,10 +151,15 @@ function enterSite() {
     bar.classList.add('visible');
     const audio = document.getElementById('bgAudio');
     audio.volume = 0.7;
-    audio.play().catch(() => {});
-    document.getElementById('pauseIcon').style.display = '';
-    document.getElementById('playIcon').style.display = 'none';
-    document.getElementById('audioBars').classList.add('playing');
+    audio.play().then(() => {
+      setupAnalyser(audio);
+      if (audioCtx.state === 'suspended') audioCtx.resume();
+      document.getElementById('pauseIcon').style.display = '';
+      document.getElementById('playIcon').style.display = 'none';
+      document.getElementById('audioBars').classList.add('playing');
+      isPlaying = true;
+      animateBars();
+    }).catch(() => {});
 
     if (!isTouchDevice) {
       document.querySelectorAll('button, a, .menu-item').forEach(el => {
@@ -166,25 +171,67 @@ function enterSite() {
 }
 
 let isPlaying = false;
+let audioCtx = null;
+let analyser = null;
+let source = null;
+let animFrameId = null;
+
+function setupAnalyser(audio) {
+  if (audioCtx) return; // already set up
+  audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  analyser = audioCtx.createAnalyser();
+  analyser.fftSize = 64;
+  source = audioCtx.createMediaElementSource(audio);
+  source.connect(analyser);
+  analyser.connect(audioCtx.destination);
+}
+
+function animateBars() {
+  const bars = document.querySelectorAll('#audioBars .bar');
+  if (!analyser) {
+    animFrameId = requestAnimationFrame(animateBars);
+    return;
+  }
+  const dataArray = new Uint8Array(analyser.frequencyBinCount);
+  analyser.getByteFrequencyData(dataArray);
+
+  bars.forEach((bar, i) => {
+    const val = dataArray[i * 2] || 0;
+    const h = Math.max(2, (val / 255) * 18);
+    bar.style.height = h + 'px';
+    bar.style.opacity = val > 10 ? '1' : '0.3';
+  });
+
+  animFrameId = requestAnimationFrame(animateBars);
+}
 
 function toggleAudio() {
   const audio = document.getElementById('bgAudio');
   const playIcon = document.getElementById('playIcon');
   const pauseIcon = document.getElementById('pauseIcon');
-  const bars = document.getElementById('audioBars');
+  const barsEl = document.getElementById('audioBars');
 
   if (audio.paused) {
+    setupAnalyser(audio);
+    if (audioCtx.state === 'suspended') audioCtx.resume();
     audio.play();
     playIcon.style.display = 'none';
     pauseIcon.style.display = '';
-    bars.classList.add('playing');
+    barsEl.classList.add('playing');
     isPlaying = true;
+    animateBars();
   } else {
     audio.pause();
     playIcon.style.display = '';
     pauseIcon.style.display = 'none';
-    bars.classList.remove('playing');
+    barsEl.classList.remove('playing');
     isPlaying = false;
+    if (animFrameId) cancelAnimationFrame(animFrameId);
+    // reset bars
+    document.querySelectorAll('#audioBars .bar').forEach(b => {
+      b.style.height = '2px';
+      b.style.opacity = '0.3';
+    });
   }
 }
 
