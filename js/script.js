@@ -177,7 +177,7 @@ let source = null;
 let animFrameId = null;
 
 function setupAnalyser(audio) {
-  if (audioCtx) return; // already set up
+  if (audioCtx) return;
   audioCtx = new (window.AudioContext || window.webkitAudioContext)();
   analyser = audioCtx.createAnalyser();
   analyser.fftSize = 64;
@@ -227,7 +227,6 @@ function toggleAudio() {
     barsEl.classList.remove('playing');
     isPlaying = false;
     if (animFrameId) cancelAnimationFrame(animFrameId);
-    // reset bars
     document.querySelectorAll('#audioBars .bar').forEach(b => {
       b.style.height = '2px';
       b.style.opacity = '0.3';
