@@ -227,7 +227,7 @@ body {
 .owner-inner {
   background: var(--bg-panel);
   border: 1px solid var(--border-color);
-  padding: 27px 22px 18px;
+  padding: 25px 20px 16px;
   width: 100%;
   position: relative;
   overflow: hidden;
