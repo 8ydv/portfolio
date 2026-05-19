@@ -38,7 +38,6 @@ button, a, .menu-item, .enter-btn {
   cursor: none !important;
 }
 
-/* الـ slider يحتاج المؤشر الطبيعي عشان يشتغل */
 input[type="range"] {
   cursor: none !important;
 }
@@ -624,7 +623,6 @@ body {
 
 #audioBar.visible { opacity: 1; }
 
-/* خط علوي ذهبي مضيء */
 #audioBar::before {
   content: '';
   position: absolute;
@@ -634,7 +632,6 @@ body {
   box-shadow: 0 0 10px rgba(200,169,110,0.5);
 }
 
-/* زوايا ديكورية داخلية */
 #audioBar::after {
   content: '';
   position: absolute;
