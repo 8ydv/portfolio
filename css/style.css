@@ -328,12 +328,12 @@ body {
 }
 
 .owner-name {
-  font-family: 'Cinzel', sans-serif;
+  font-family: 'Cinzel Decorative', sans-serif;
   font-size: 22px;
   font-weight: 700;
   letter-spacing: 3px;
   color: var(--white);
-  text-transform: uppercase;
+  text-transform: none;
 }
 
 .verified-badge {
@@ -345,7 +345,7 @@ body {
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  transform: translate(-2px, -1px);
+  transform: translate(-5px, -2px);
   color: var(--accent);
   filter: drop-shadow(0 0 5px rgba(200,169,110,0.6));
 }
