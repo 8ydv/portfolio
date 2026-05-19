@@ -1,19 +1,19 @@
 :root {
-  --bg-primary: #0a0c0e;
-  --bg-secondary: #111416;
-  --bg-panel: rgba(15, 18, 22, 0.92);
-  --bg-menu-item: rgba(255,255,255,0.03);
-  --bg-menu-hover: rgba(255,255,255,0.08);
-  --border-color: rgba(255,255,255,0.06);
-  --border-active: rgba(255,255,255,0.15);
+  --bg-primary: #070909;
+  --bg-secondary: #0d1012;
+  --bg-panel: rgba(10, 13, 16, 0.97);
+  --bg-menu-item: rgba(255,255,255,0.025);
+  --bg-menu-hover: rgba(200,169,110,0.06);
+  --border-color: rgba(200,169,110,0.1);
+  --border-active: rgba(200,169,110,0.3);
   --text-primary: #e8eaec;
   --text-secondary: #8a9099;
   --text-muted: #4a5260;
   --accent: #c8a96e;
-  --accent-dim: rgba(200,169,110,0.15);
+  --accent-dim: rgba(200,169,110,0.12);
   --accent-glow: rgba(200,169,110,0.3);
   --white: #ffffff;
-  --line-color: rgba(200,169,110,0.2);
+  --line-color: rgba(200,169,110,0.15);
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -35,6 +35,11 @@ html, body {
 }
 
 button, a, .menu-item, .enter-btn {
+  cursor: none !important;
+}
+
+/* الـ slider يحتاج المؤشر الطبيعي عشان يشتغل */
+input[type="range"] {
   cursor: none !important;
 }
 
@@ -225,27 +230,36 @@ body {
 }
 
 .owner-inner {
-  background: var(--bg-panel);
-  border: 1px solid var(--border-color);
+  background:
+    linear-gradient(160deg, rgba(200,169,110,0.04) 0%, transparent 40%),
+    linear-gradient(to bottom, rgba(12,15,18,0.99), rgba(8,10,12,0.99));
+  border: 1px solid rgba(200,169,110,0.12);
   padding: 25px 20px 16px;
   width: 100%;
   position: relative;
   overflow: hidden;
+  box-shadow:
+    0 0 0 1px rgba(0,0,0,0.8),
+    0 20px 60px rgba(0,0,0,0.6),
+    inset 0 1px 0 rgba(200,169,110,0.08);
 }
 
 .owner-inner::before {
   content: '';
   position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 2px;
-  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  top: 0; left: 10%; right: 10%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(200,169,110,0.8), transparent);
+  box-shadow: 0 0 12px rgba(200,169,110,0.4);
 }
 
 .owner-inner::after {
   content: '';
   position: absolute;
   inset: 0;
-  background: radial-gradient(ellipse at 50% 0%, rgba(200,169,110,0.04) 0%, transparent 60%);
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(200,169,110,0.06) 0%, transparent 55%),
+    radial-gradient(ellipse at 50% 100%, rgba(200,169,110,0.02) 0%, transparent 50%);
   pointer-events: none;
 }
 
@@ -442,25 +456,33 @@ body {
 }
 
 .menu-container {
-  background: var(--bg-panel);
-  border: 1px solid var(--border-color);
+  background:
+    linear-gradient(160deg, rgba(200,169,110,0.03) 0%, transparent 35%),
+    linear-gradient(to bottom, rgba(12,15,18,0.99), rgba(8,10,12,0.99));
+  border: 1px solid rgba(200,169,110,0.12);
   overflow: hidden;
   position: relative;
+  box-shadow:
+    0 0 0 1px rgba(0,0,0,0.8),
+    0 20px 60px rgba(0,0,0,0.6),
+    inset 0 1px 0 rgba(200,169,110,0.06);
 }
 
 .menu-container::before {
   content: '';
   position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 2px;
-  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  top: 0; left: 10%; right: 10%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(200,169,110,0.8), transparent);
+  box-shadow: 0 0 12px rgba(200,169,110,0.4);
 }
 
 .menu-header {
   padding: 18px 20px 10px;
   text-align: center;
-  border-bottom: 1px solid var(--border-color);
-  background: rgba(0,0,0,0.3);
+  border-bottom: 1px solid rgba(200,169,110,0.08);
+  background:
+    linear-gradient(to bottom, rgba(200,169,110,0.05), rgba(0,0,0,0.4));
 }
 
 .menu-header h2 {
@@ -576,50 +598,78 @@ body {
 
 #audioBar {
   position: fixed;
-  bottom: 24px;
+  bottom: 28px;
   left: 50%;
   transform: translateX(-50%);
   z-index: 20;
   display: flex;
   align-items: center;
-  gap: 14px;
-  background: var(--bg-panel);
-  border: 1px solid var(--border-color);
-  padding: 10px 20px;
-  min-width: 280px;
+  gap: 18px;
+  background:
+    linear-gradient(135deg, rgba(200,169,110,0.04) 0%, transparent 50%),
+    linear-gradient(to bottom, rgba(14,17,20,0.98), rgba(8,10,12,0.99));
+  border: 1px solid rgba(200,169,110,0.15);
+  padding: 14px 24px;
+  min-width: 360px;
   opacity: 0;
   transition: opacity 0.5s ease 1s;
   direction: ltr;
+  backdrop-filter: blur(20px);
+  box-shadow:
+    0 0 0 1px rgba(0,0,0,0.9),
+    0 16px 48px rgba(0,0,0,0.7),
+    0 0 80px rgba(200,169,110,0.04),
+    inset 0 1px 0 rgba(200,169,110,0.08);
 }
 
 #audioBar.visible { opacity: 1; }
 
+/* خط علوي ذهبي مضيء */
 #audioBar::before {
   content: '';
   position: absolute;
-  top: 0; left: 0; right: 0;
+  top: 0; left: 15%; right: 15%;
   height: 1px;
-  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  background: linear-gradient(90deg, transparent, rgba(200,169,110,0.9), transparent);
+  box-shadow: 0 0 10px rgba(200,169,110,0.5);
+}
+
+/* زوايا ديكورية داخلية */
+#audioBar::after {
+  content: '';
+  position: absolute;
+  inset: 4px;
+  border: 1px solid rgba(200,169,110,0.04);
+  pointer-events: none;
 }
 
 .audio-play-btn {
-  width: 32px; height: 32px;
-  border: 1px solid var(--border-color);
-  background: var(--bg-menu-item);
-  color: var(--text-secondary);
+  width: 38px; height: 38px;
+  border: 1px solid rgba(200,169,110,0.25);
+  background: linear-gradient(135deg, rgba(200,169,110,0.1), rgba(200,169,110,0.04));
+  color: var(--accent);
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.2s;
+  transition: all 0.25s;
   flex-shrink: 0;
+  border-radius: 50%;
+  box-shadow:
+    0 0 0 1px rgba(0,0,0,0.5),
+    0 0 16px rgba(200,169,110,0.12),
+    inset 0 1px 0 rgba(200,169,110,0.1);
 }
 
 .audio-play-btn:hover {
   border-color: var(--accent);
-  color: var(--accent);
+  background: linear-gradient(135deg, rgba(200,169,110,0.2), rgba(200,169,110,0.08));
+  box-shadow:
+    0 0 0 1px rgba(0,0,0,0.5),
+    0 0 24px rgba(200,169,110,0.3);
+  transform: scale(1.05);
 }
 
-.audio-play-btn svg { width: 12px; height: 12px; fill: currentColor; }
+.audio-play-btn svg { width: 13px; height: 13px; fill: currentColor; }
 
 .audio-info {
   flex: 1;
@@ -627,42 +677,35 @@ body {
 }
 
 .audio-title {
-  font-size: 11px;
-  color: var(--text-secondary);
-  letter-spacing: 2px;
+  font-size: 8px;
+  color: rgba(200,169,110,0.5);
+  letter-spacing: 4px;
   text-transform: uppercase;
   white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  font-family: 'Exo 2', sans-serif;
+  font-weight: 700;
+  margin-bottom: 8px;
 }
 
 .audio-bars {
   display: flex;
   align-items: flex-end;
-  gap: 2px;
-  height: 14px;
-  margin-top: 4px;
+  gap: 3px;
+  height: 20px;
 }
 
 .audio-bars .bar {
   width: 3px;
-  background: var(--accent);
-  border-radius: 1px;
-  transition: height 0.1s;
+  background: linear-gradient(to top, var(--accent), rgba(200,169,110,0.3));
+  border-radius: 2px;
+  height: 2px;
+  opacity: 0.3;
+  box-shadow: 0 0 4px rgba(200,169,110,0.3);
+  transition: height 0.08s ease, opacity 0.08s ease;
+  animation: none !important;
 }
 
-.audio-bars.playing .bar:nth-child(1) { animation: audioBar 0.8s ease-in-out infinite; }
-.audio-bars.playing .bar:nth-child(2) { animation: audioBar 0.8s ease-in-out 0.15s infinite; }
-.audio-bars.playing .bar:nth-child(3) { animation: audioBar 0.8s ease-in-out 0.3s infinite; }
-.audio-bars.playing .bar:nth-child(4) { animation: audioBar 0.8s ease-in-out 0.1s infinite; }
-.audio-bars.playing .bar:nth-child(5) { animation: audioBar 0.8s ease-in-out 0.25s infinite; }
-
-@keyframes audioBar {
-  0%, 100% { height: 3px; }
-  50% { height: 12px; }
-}
-
-.audio-bars:not(.playing) .bar { height: 2px; }
+.audio-bars:not(.playing) .bar { height: 2px; opacity: 0.3; }
 
 .volume-wrap {
   display: flex;
