@@ -884,7 +884,7 @@ input[type="range"].volume-slider::-webkit-slider-thumb {
   opacity: 0.85;
   position: relative;
   top: 1px;
-  margin-right: 12px;
+  margin-right: -1px;
 }
 
 .supported-games-grid {
