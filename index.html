@@ -1,335 +1,79 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Royal Menu</title>
-<link rel="icon" type="image/png" href="media/icon.png">
-<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600;700&family=Exo+2:wght@300;400;600;700&family=Cairo:wght@300;400;600;700&family=Cinzel+Decorative:wght@700&family=Cinzel:wght@400;700&family=Josefin+Sans:wght@300;700&family=Bebas+Neue&family=Orbitron:wght@700&family=Italiana&family=Playfair+Display:wght@700&family=Cormorant+Garamond:wght@300;700&display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Royal Menu — the all-in-one mod menu for PS4, by Mèdo.">
+<title>Royal Menu — by Mèdo</title>
+<link rel="icon" href="media/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="media/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="media/apple-touch-icon.png">
+<meta name="theme-color" content="#070707">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@400;500;600;700&display=swap">
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+<canvas id="bg" aria-hidden="true"></canvas>
+<div class="vig"></div>
+<div class="ghost" id="ghost" aria-hidden="true">MAIN</div>
 
-<div id="cursor">
-  <div id="cursor-outer"></div>
-  <div id="cursor-inner"></div>
-  <div id="cursor-corner-tl"></div>
-  <div id="cursor-corner-tr"></div>
-  <div id="cursor-corner-bl"></div>
-  <div id="cursor-corner-br"></div>
-</div>
-
-<canvas id="bgCanvas"></canvas>
-
-<div id="introScreen">
-  <div class="intro-logo">
-    <h1>Royal Menu</h1>
-    <div class="intro-divider"></div>
-    <div class="by-line">BY MÈDO</div>
-  </div>
-  <button class="enter-btn" onclick="enterSite()">
-    <span class="btn-corner corner-tl"></span>
-    <span class="btn-corner corner-tr"></span>
-    <span class="btn-corner corner-bl"></span>
-    <span class="btn-corner corner-br"></span>
-    ENTER
-  </button>
-</div>
-
-<div id="mainLayout">
-
-  <div class="owner-card">
-    <div class="owner-inner">
-      <div class="card-corner tl"></div>
-      <div class="card-corner tr"></div>
-      <div class="card-corner bl"></div>
-      <div class="card-corner br"></div>
-
-      <div class="avatar-wrap">
-  <div class="avatar-ring"></div>
-
-  <div class="avatar-placeholder" id="avatarEl">
-    <img src="media/IMG_6590.jpg" alt="Avatar"
-    width="96" height="96"
-    style="width:100%;height:100%;object-fit:cover;border-radius:50%;">
-  </div>
-</div>
-
-<div class="owner-name-row">
-  <div class="owner-name">Mèdo</div>
-
-  <div class="verified-badge">
-    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-      <path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" fill="currentColor" stroke="none"/>
-      <polyline points="8.5,12.5 11,15 15.5,9.5" fill="none" stroke="var(--bg-primary)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-    </svg>
-  </div>
-</div>
-
-<div class="owner-title">MENU DEVELOPER • ROYAL MENU</div>
-
-<div class="divider-line"></div>
-
-<div class="socials-label">Follow</div>
-
-<div class="socials-grid">
-
-  <a class="social-icon-btn"
-     href="https://www.instagram.com/8ydv"
-     target="_blank">
-
-    <svg viewBox="0 0 24 24" fill="currentColor">
-      <path d="M7 2C4.243 2 2 4.243 2 7v10c0 2.757 2.243 5 5 5h10c2.757 0 5-2.243 5-5V7c0-2.757-2.243-5-5-5H7zm0 2h10c1.654 0 3 1.346 3 3v10c0 1.654-1.346 3-3 3H7c-1.654 0-3-1.346-3-3V7c0-1.654 1.346-3 3-3zm5 2.8A5.2 5.2 0 1 0 17.2 12 5.206 5.206 0 0 0 12 6.8zm0 2A3.2 3.2 0 1 1 8.8 12 3.204 3.204 0 0 1 12 8.8zm5.25-3.3a1.25 1.25 0 1 0 1.25 1.25 1.252 1.252 0 0 0-1.25-1.25z"/>
-    </svg>
-
-  </a>
-
-
-  <a class="social-icon-btn"
-     href="https://ko-fi.com/imedo"
-     target="_blank"
-     title="Ko-fi">
-    <svg viewBox="0 0 24 24" fill="currentColor">
-      <path d="M23.881 8.948c-.773-4.085-4.859-4.593-4.859-4.593H.723c-.604 0-.679.798-.679.798s-.082 7.324-.022 11.822c.164 2.424 2.586 2.672 2.586 2.672s8.267-.023 11.966-.049c2.438-.426 2.683-2.566 2.658-3.734 4.352.24 7.422-2.831 6.649-6.916zm-11.062 3.511c-1.246 1.453-4.011 3.976-4.011 3.976s-.121.119-.31.023c-.076-.057-.108-.09-.108-.09-.443-.441-3.368-3.049-4.034-3.954-.709-.965-1.041-2.7-.091-3.71.951-1.01 3.005-1.086 4.363.407 0 0 1.565-1.782 3.468-.963 1.904.82 1.832 2.011.723 4.311zm6.173.478c-.928.116-1.682.028-1.682.028V7.284h1.77s1.971.551 1.971 2.638c0 1.913-.985 2.667-2.059 3.015z"/>
-    </svg>
-  </a>
-
-  <a class="social-icon-btn"
-     href="https://www.tiktok.com/@iczer21"
-     target="_blank">
-
-    <svg viewBox="0 0 24 24" fill="currentColor">
-      <path d="M19.589 6.686a4.793 4.793 0 0 1-3.77-4.237h-3.454v13.67a2.896 2.896 0 1 1-2.896-2.896c.287 0 .562.043.822.12V9.827a6.349 6.349 0 0 0-.822-.055A6.35 6.35 0 1 0 15.82 16.12V9.167a8.192 8.192 0 0 0 4.77 1.526V6.686z"/>
-    </svg>
-
-  </a>
-
-  <a class="social-icon-btn"
-     href="https://discordapp.com/users/755456390717374635"
-     target="_blank">
-
-    <svg viewBox="0 0 24 24" fill="currentColor">
-
-      <path d="M20.317 4.3698a19.7913 19.7913 0 0 0-4.8851-1.5152.0741.0741 0 0 0-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.6179-1.2495.077.077 0 0 0-.0785-.037A19.7363 19.7363 0 0 0 3.677 4.3698a.0699.0699 0 0 0-.0321.0277C.5334 9.0467-.3202 13.5799.0997 18.0578a.0824.0824 0 0 0 .0312.0561 19.9 19.9 0 0 0 5.9931 3.03.078.078 0 0 0 .0842-.0276c.4613-.6304.8731-1.2952 1.226-1.9942a.0761.0761 0 0 0-.0416-.1057 13.107 13.107 0 0 1-1.872-0.892.077.077 0 0 1-.0076-.1277c.1258-.0943.2498-.1923.3687-.2914a.0743.0743 0 0 1 .0776-.0105c3.9278 1.7938 8.18 1.7938 12.0614 0a.0743.0743 0 0 1 .0776.0105c.119.0991.2429.1971.3688.2914a.077.077 0 0 1-.0066.1277 12.299 12.299 0 0 1-1.873.892.0766.0766 0 0 0-.0407.1067c.3604.698.7722 1.3628 1.225 1.9932a.077.077 0 0 0 .0842.0286 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .0312-.0551c.5004-5.177-.8382-9.6742-3.5485-13.6591a.061.061 0 0 0-.0312-.0281z"/>
-
-      <ellipse cx="9.2" cy="12.3" rx="1.45" ry="1.6" fill="#0b0b0b"/>
-      <ellipse cx="14.8" cy="12.3" rx="1.45" ry="1.6" fill="#0b0b0b"/>
-
-    </svg>
-
-  </a>
-
-  <a class="social-icon-btn"
-     href="https://x.com/i8ydv"
-     target="_blank">
-
-    <svg viewBox="0 0 1200 1227" fill="currentColor">
-
-      <path d="M714.163 519.284L1160.89 0H1055.3L667.137 450.887L357.328 0H0L468.492 681.821L0 1226.37H105.543L515.239 750.594L842.672 1226.37H1200L714.137 519.284H714.163ZM568.731 688.315L521.404 620.617L145.011 82.1198H307.615L611.303 516.233L658.63 583.931L1055.35 1151.96H892.744L568.731 688.341V688.315Z"/>
-
-    </svg>
-
-  </a>
-
-  <a class="social-icon-btn"
-     href="https://www.youtube.com/@Medo-t8c"
-     target="_blank">
-
-    <svg viewBox="0 0 24 24" fill="currentColor">
-      <path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2 31.4 31.4 0 0 0 0 12a31.4 31.4 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1A31.4 31.4 0 0 0 24 12a31.4 31.4 0 0 0-.5-5.8zM9.75 15.5v-7L16 12l-6.25 3.5z"/>
-    </svg>
-
-  </a>
-
-
-</div>
-
-<div class="divider-line" style="margin-top:20px;"></div>
-<div class="supported-label">SUPPORTED GAMES</div>
-<div class="supported-platform">
-  <img src="media\playstation-logotype_1443.png" alt="PlayStation" class="ps-logo-img">
-</div>
-<div class="supported-games-grid">
-  <div class="game-tag">
-  <span class="game-tag-dot"></span>
-  BO1
-  </div>
-  <div class="game-tag">
-  <span class="game-tag-dot"></span>
-  BO2
-  </div>
-  <div class="game-tag">
-  <span class="game-tag-dot"></span>
-  GHOST
-  </div>
-  <div class="game-tag">
-  <span class="game-tag-dot"></span>
-  MWR
-  </div>
-  <div class="game-tag">
-  <span class="game-tag-dot"></span>
-  AW
-  </div>
-  <div class="game-tag">
-  <span class="game-tag-dot"></span>
-  IW
-  </div>
-  <div class="game-tag">
-  <span class="game-tag-dot"></span>
-  WW2
-  </div>
-  <div class="game-tag">
-  <span class="game-tag-dot"></span>
-  MW2CR
-  </div>
-  <div class="game-tag">
-  <span class="game-tag-dot"></span>
-  VG
-  </div>
-  <div class="game-tag">
-  <span class="game-tag-dot"></span>
-  MW2019
-  </div>
-  <div class="game-tag">
-  <span class="game-tag-dot"></span>
-  MW2-2022
-</div>
-</div>
-
-</div>
-</div>
-
-<div class="menu-panel">
-  <div class="menu-container">
-
-    <div class="menu-header">
-      <h2>Royal Menu</h2>
-      <div class="menu-by">By Mèdo</div>
-    </div>
-
-    <div class="menu-item" onclick="openItem(this, 'Main Mods', 'Access powerful gameplay modifications and advanced in-game features.')">
-      <div class="menu-item-dot"></div>
-      <span>Main Mods</span>
-      <div class="menu-item-arrow">›</div>
-    </div>
-
-    <div class="menu-items" id="menuItems">
-
-      <div class="menu-item" onclick="openItem(this, 'Weapon Menu', 'Choose from a full collection of weapons including rifles, SMGs, snipers and more.')">
-        <div class="menu-item-dot"></div>
-        <span>Weapon Menu</span>
-        <div class="menu-item-arrow">›</div>
-      </div>
-
-      <div class="menu-item" onclick="openItem(this, 'Lobby Menu', 'Manage match settings, bots, streaks, XP lobbies and game controls.')">
-        <div class="menu-item-dot"></div>
-        <span>Lobby Menu</span>
-        <div class="menu-item-arrow">›</div>
-      </div>
-
-      <div class="menu-item" onclick="openItem(this, 'Account Menu', 'Unlock ranks, prestige rewards, emblems and account customizations.')">
-        <div class="menu-item-dot"></div>
-        <span>Account Menu</span>
-        <div class="menu-item-arrow">›</div>
-      </div>
-
-      <div class="menu-item" onclick="openItem(this, 'Fun Menu', 'Activate fun gameplay effects, teleportation tools and unique visual actions.')">
-        <div class="menu-item-dot"></div>
-        <span>Fun Menu</span>
-        <div class="menu-item-arrow">›</div>
-      </div>
-
-      <div class="menu-item" onclick="openItem(this, 'Bullet Menu', 'Modify bullet behavior with explosive, laser, RPG and teleport effects.')">
-        <div class="menu-item-dot"></div>
-        <span>Bullet Menu</span>
-        <div class="menu-item-arrow">›</div>
-      </div>
-
-      <div class="menu-item" onclick="openItem(this, 'Players Menu', 'Interact with players using teleportation, moderation and control features.')">
-        <div class="menu-item-dot"></div>
-        <span>Players Menu</span>
-        <div class="menu-item-arrow">›</div>
-      </div>
-
-      <div class="menu-item" onclick="openItem(this, 'Cheaters Menu', 'Access advanced targeting tools, ESP features, UAV systems and combat enhancements.')">
-        <div class="menu-item-dot"></div>
-        <span>Cheaters Menu</span>
-        <div class="menu-item-arrow">›</div>
-      </div>
-
-      <div class="menu-item" onclick="openItem(this, 'Message Menu', 'Send preset chat messages, alerts, reactions and custom in-game taunts instantly.')">
-        <div class="menu-item-dot"></div>
-        <span>Message Menu</span>
-        <div class="menu-item-arrow">›</div>
-      </div>
-
-      <div class="menu-item" onclick="openItem(this, 'Theme Menu', 'Customize the menu appearance with premium themes and visual styles.')">
-        <div class="menu-item-dot"></div>
-        <span>Theme Menu</span>
-        <div class="menu-item-arrow">›</div>
-      </div>
-
+<div id="intro">
+  <div class="frame">
+    <div class="head"><h1>Royal Menu</h1><small>By Mèdo</small></div>
+    <div class="body">
+      <p>The all-in-one mod menu for PS4.</p>
+      <button class="btn" id="enter" autofocus><span>Enter Site</span><span>›</span></button>
     </div>
   </div>
 </div>
 
-<div class="overlay-backdrop" id="backdrop" onclick="closePopup()"></div>
-
-<div class="content-popup" id="contentPopup">
-  <button class="popup-close" onclick="closePopup()">✕</button>
-  <div class="popup-title" id="popupTitle"></div>
-  <div class="popup-desc" id="popupDesc"></div>
-</div>
-
-<div id="audioBar">
-
-  <button class="audio-play-btn" id="playBtn" onclick="toggleAudio()">
-    <svg id="playIcon" viewBox="0 0 12 12">
-      <path d="M3 2l7 4-7 4z"/>
-    </svg>
-
-    <svg id="pauseIcon" viewBox="0 0 12 12" style="display:none">
-      <rect x="2" y="2" width="3" height="8"/>
-      <rect x="7" y="2" width="3" height="8"/>
-    </svg>
-  </button>
-
-  <div class="audio-info">
-    <div class="audio-title">BACKGROUND THEME</div>
-
-    <div class="audio-bars" id="audioBars">
-      <div class="bar"></div>
-      <div class="bar"></div>
-      <div class="bar"></div>
-      <div class="bar"></div>
-      <div class="bar"></div>
+<div class="app">
+  <!-- LEFT: profile + links + games -->
+  <div class="left">
+    <div class="who">
+      <div class="avatar" id="avatar">
+          <div class="ph">M</div>
+          <img id="avatarImg" alt="Mèdo profile picture" onerror="this.remove()">
+          <span class="tint"></span><span class="scan"></span>
+        </div>
+      <div>
+        <h1>Mèdo<span class="vf" role="img" aria-label="Verified"><svg viewBox="0 0 24 24" fill="currentColor"><path fill-rule="evenodd" d="M22.25 12c0-1.43-.88-2.67-2.19-3.34.46-1.39.2-2.9-.81-3.91s-2.52-1.27-3.91-.81c-.66-1.31-1.91-2.19-3.34-2.19s-2.67.88-3.33 2.19c-1.4-.46-2.91-.2-3.92.81s-1.26 2.52-.8 3.91c-1.31.67-2.2 1.91-2.2 3.34s.89 2.67 2.2 3.34c-.46 1.39-.21 2.9.8 3.91s2.52 1.26 3.91.81c.67 1.31 1.91 2.19 3.34 2.19s2.68-.88 3.34-2.19c1.39.45 2.9.2 3.91-.81s1.27-2.52.81-3.91c1.31-.67 2.19-1.91 2.19-3.34zm-11.71 4.2L6.8 12.46l1.41-1.42 2.26 2.26 4.8-5.23 1.47 1.36-6.2 6.77z"/></svg></span></h1>
+        <p class="role">Creator of Royal Menu</p>
+      </div>
+    </div>
+    <div class="socials" id="socials"></div>
+    <div class="games">
+      <header><h2>Supported Games</h2><i>PS4</i></header>
+      <div class="chips" id="chips"></div>
+      <p class="gcap" id="gcap">11 titles · all on PS4</p>
     </div>
   </div>
 
-  <div class="volume-wrap">
-    <div class="volume-icon">
-      <svg viewBox="0 0 24 24">
-        <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
-      </svg>
+  <!-- RIGHT: the menu -->
+  <div class="stage" id="stage">
+    <div id="tilt">
+      <div class="frame" id="box" tabindex="0" aria-label="Royal Menu">
+        <div class="head"><h2 id="mt">Royal Menu</h2><small>By Mèdo</small></div>
+        <div class="list" id="list" role="menu"></div>
+        <div class="info" id="info"></div>
+        <div id="shine"></div>
+      </div>
     </div>
-
-    <input type="range"
-      class="volume-slider"
-      id="volSlider"
-      min="0"
-      max="100"
-      value="70"
-      oninput="setVolume(this.value)"
-      style="--val:70%">
   </div>
-
 </div>
 
-<audio id="bgAudio" loop preload="none">
-  <source src="media/audio.mp3" type="audio/mpeg">
-</audio>
+<!-- BOTTOM CENTRE: music player -->
+<div id="player">
+  <div class="frame">
+    <div class="pl">
+      <button class="pbtn" id="pp" aria-label="Play or pause"></button>
+      <div class="pinfo"><b id="tn"></b><span>Now playing</span></div>
+      <canvas id="viz" width="260" height="38"></canvas>
+      <input type="range" id="vol" min="0" max="100" value="55" aria-label="Volume">
+    </div>
+  </div>
+</div>
 
 <script src="js/script.js"></script>
-
 </body>
 </html>
