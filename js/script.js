@@ -59,6 +59,7 @@ const PAUSE = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 4h4v16H6
 
 /* ---------- 3) BUILD static content ---------- */
 const $ = s => document.querySelector(s), root = document.documentElement;
+$("#avatarImg").onload = () => { const p = $("#avatar .ph"); if (p) p.remove(); };
 $("#avatarImg").src = AVATAR_SRC;
 $("#socials").innerHTML = LINKS.map(l =>
   `<a class="soc" href="${l.u}" target="_blank" rel="noopener" aria-label="${l.n}" data-n="${l.n}">${IC[l.i]}</a>`).join("");
@@ -73,9 +74,10 @@ $("#tn").textContent = TRACK_NAME;
 $("#pp").innerHTML = PLAY;
 
 /* ---------- 4) MENU + LIVE THEME ---------- */
-const list = $("#list"), info = $("#info"), mt = $("#mt"), ghost = $("#ghost"), VIEW = 9;
+const list = $("#list"), info = $("#info"), mt = $("#mt"), ghost = $("#ghost");
+const mob = matchMedia("(max-width:860px)"), V = () => mob.matches ? 99 : 9;
 let A = [246,246,246], rainbow = false, colName = "Default Color";
-let view = "main", cur = 0, start = 0, pulse = 0, toastT;
+let view = "main", cur = 0, start = 0, pulse = 0, toastT, lastView = "";
 
 const rowsOf = () => view === "main"
   ? MENU.map(m => ({ t: m[0], d: m[2], w: m[1], go: m[0] === "Menu Settings" ? "col" : null }))
@@ -97,9 +99,10 @@ function render() {
   const rs = rowsOf(), n = rs.length;
   mt.textContent = view === "main" ? "Royal Menu" : "Menu Color";
   if (cur < start) start = cur;
-  if (cur >= start + VIEW) start = cur - VIEW + 1;
-  start = Math.max(0, Math.min(start, Math.max(0, n - VIEW)));
-  list.innerHTML = rs.slice(start, start + VIEW).map((x, k) => {
+  if (cur >= start + V()) start = cur - V() + 1;
+  start = Math.max(0, Math.min(start, Math.max(0, n - V())));
+  const keep = lastView === view ? list.scrollTop : 0;
+  list.innerHTML = rs.slice(start, start + V()).map((x, k) => {
     const i = start + k;
     return `<button class="row${i === cur ? " on" : ""}" role="menuitem" data-i="${i}"><span>${x.t}</span>${mark(x)}</button>`;
   }).join("");
@@ -108,13 +111,16 @@ function render() {
     r.onmouseenter = () => { if (i !== cur) { cur = i; hl(); blip(430 + i * 30, .05); } };
     r.onclick = () => act(i);
   });
+  list.scrollTop = keep; lastView = view;
+  if (mob.matches) { const on = list.querySelector(".on"); if (on) { const t = on.offsetTop, bt = t + on.offsetHeight;
+    if (t < list.scrollTop) list.scrollTop = t - 6; else if (bt > list.scrollTop + list.clientHeight) list.scrollTop = bt - list.clientHeight + 6; } }
   hl(true);
 }
 function hl(skipRows) {
   const rs = rowsOf(), x = rs[cur];
   if (!skipRows) list.querySelectorAll(".row").forEach(r => r.classList.toggle("on", +r.dataset.i === cur));
   info.classList.remove("ok");
-  info.innerHTML = `<b>${x.t}${rs.length > VIEW ? `<small style="float:right;font-weight:400;color:var(--mute);font-size:16px">${cur + 1}/${rs.length}</small>` : ""}</b><span>${x.d}</span>`;
+  info.innerHTML = `<b>${x.t}${rs.length > V() ? `<small style="float:right;font-weight:400;color:var(--mute);font-size:16px">${cur + 1}/${rs.length}</small>` : ""}</b><span>${x.d}</span>`;
   setGhost(x.w);
 }
 function setGhost(w) {
@@ -151,9 +157,9 @@ $("#box").addEventListener("keydown", e => {
   else if (view !== "main") act(0);
 });
 $("#box").addEventListener("wheel", e => {
-  const n = rowsOf().length; if (n <= VIEW) return; e.preventDefault();
-  start = Math.max(0, Math.min(n - VIEW, start + (e.deltaY > 0 ? 1 : -1)));
-  cur = Math.max(start, Math.min(cur, start + VIEW - 1)); render();
+  const n = rowsOf().length; if (n <= V()) return; e.preventDefault();
+  start = Math.max(0, Math.min(n - V(), start + (e.deltaY > 0 ? 1 : -1)));
+  cur = Math.max(start, Math.min(cur, start + V() - 1)); render();
 }, { passive: false });
 $("#box").addEventListener("mouseenter", () => $("#box").focus({ preventScroll: true }));
 render();
